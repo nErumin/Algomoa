@@ -4,7 +4,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 /**
- * Created by CAUCSE on 2015-11-21.
+ * Created by Lumin on 2015-11-21.
  */
 public class SimpleWebViewClient extends WebViewClient {
     @Override

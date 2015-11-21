@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 import kr.ac.cau.lumin.algomoa.R;
 
+/**
+ * Created by Lumin on 2015-11-21.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
