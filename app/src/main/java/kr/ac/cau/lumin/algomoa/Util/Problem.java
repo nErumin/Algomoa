@@ -1,11 +1,11 @@
 package kr.ac.cau.lumin.algomoa.Util;
 
-import java.io.InvalidObjectException;
+import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 
 /**
  * Created by Lumin on 2015-11-21.
  */
-public class Problem implements Comparable {
+public class Problem implements Comparable, Transmittable {
     private int problemNumber;
     private SiteName siteName;
     private String problemName;
@@ -29,6 +29,21 @@ public class Problem implements Comparable {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public String getRequestURL() {
+        StringBuilder requestUrlBuilder = new StringBuilder(this.siteName.getBaseSearchURL());
+
+        if (this.siteName.needContainsNumber()) {
+            requestUrlBuilder.append(this.getProblemNumber() + Transmittable.SPERATOR);
+        }
+
+        if (this.siteName.needContainsName()) {
+            requestUrlBuilder.append(this.getProblemName() + Transmittable.SPERATOR);
+        }
+
+        return this.siteName.getBaseSearchURL();
     }
 
     public int getProblemNumber() {

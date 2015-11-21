@@ -11,10 +11,10 @@ import java.util.Collections;
  */
 public class AlgorithmSite {
     private ArrayList<Problem> containedProblems;
-    private String name;
+    private SiteName name;
 
     public AlgorithmSite(SiteName siteName) {
-        this.name = siteName.toString();
+        this.name = siteName;
     }
 
     public void addProblem(Problem problem) {
