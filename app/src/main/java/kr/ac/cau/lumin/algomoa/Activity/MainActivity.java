@@ -1,7 +1,9 @@
-package kr.ac.cau.lumin.algomoa;
+package kr.ac.cau.lumin.algomoa.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import kr.ac.cau.lumin.algomoa.R;
 
 public class MainActivity extends AppCompatActivity {
 
