@@ -44,6 +44,10 @@ public class AlgorithmSite {
         return foundProblem;
     }
 
+    public SiteName getSiteName() {
+        return this.name;
+    }
+
     public Problem[] getContainedProblems() {
         return (Problem[]) this.containedProblems.toArray();
     }
