@@ -2,8 +2,8 @@ package kr.ac.cau.lumin.algomoa.Util;
 
 import android.content.res.Resources;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -11,18 +11,22 @@ import java.util.Collections;
  */
 public class AlgorithmSite {
     private ArrayList<Problem> containedProblems;
-    private SiteName name;
+    private SiteList name;
 
-    public AlgorithmSite(SiteName siteName) {
-        this.name = siteName;
+    public AlgorithmSite(SiteList siteList) {
+        this.name = siteList;
     }
 
-    public void addProblem(Problem problem) {
+    public void addProblem(Problem problem) throws InvalidObjectException {
+        if (this.name.toString() != problem.getSiteList().toString()) {
+            throw new InvalidObjectException("Different Name.");
+        }
+
         this.containedProblems.add(problem);
         Collections.sort(this.containedProblems);
     }
 
-    public void deleteProblem(int problemNumber) throws Resources.NotFoundException {
+    public void deleteProblem(String problemNumber) throws Resources.NotFoundException {
         Problem targetProblem = this.findProblem(problemNumber);
 
         if (targetProblem == null) {
@@ -32,11 +36,11 @@ public class AlgorithmSite {
         this.containedProblems.remove(targetProblem);
     }
 
-    public Problem findProblem(int problemNumber) {
+    public Problem findProblem(String problemNumber) {
         Problem foundProblem = null;
 
         for (Problem problem : this.containedProblems) {
-            if (problem.getProblemNumber() == problemNumber) {
+            if (problem.getProblemNumber().equals(problemNumber)) {
                 foundProblem = problem;
             }
         }
@@ -44,7 +48,7 @@ public class AlgorithmSite {
         return foundProblem;
     }
 
-    public SiteName getSiteName() {
+    public SiteList getSiteName() {
         return this.name;
     }
 

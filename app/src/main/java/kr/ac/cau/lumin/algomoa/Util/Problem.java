@@ -5,13 +5,13 @@ import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 /**
  * Created by Lumin on 2015-11-21.
  */
-public class Problem implements Comparable, Transmittable {
-    private int problemNumber;
-    private SiteName siteName;
-    private String problemName;
+public abstract class Problem implements Comparable, Transmittable {
+    private SiteList siteList;
+    protected String problemName;
+    protected String problemNumber;
 
-    public Problem(SiteName siteName, int problemNumber, String problemName) {
-        this.siteName = siteName;
+    public Problem(SiteList siteList, String problemNumber, String problemName) {
+        this.siteList = siteList;
         this.problemNumber = problemNumber;
         this.problemName = problemName;
     }
@@ -20,38 +20,18 @@ public class Problem implements Comparable, Transmittable {
     public int compareTo(Object another) {
         if (another instanceof Problem) {
             Problem anotherProblem = (Problem) another;
-
-            if (this.problemNumber == anotherProblem.problemNumber) {
-                return 0;
-            } else {
-                return (this.problemNumber > anotherProblem.problemNumber) ? 1 : -1;
-            }
+            return this.problemNumber.compareTo(anotherProblem.getProblemNumber());
         } else {
             return 0;
         }
     }
 
-    @Override
-    public String getRequestURL() {
-        StringBuilder requestUrlBuilder = new StringBuilder(this.siteName.getBaseSearchURL());
-
-        if (this.siteName.needContainsNumber()) {
-            requestUrlBuilder.append(this.getProblemNumber() + Transmittable.SPERATOR);
-        }
-
-        if (this.siteName.needContainsName()) {
-            requestUrlBuilder.append(this.getProblemName() + Transmittable.SPERATOR);
-        }
-
-        return this.siteName.getBaseSearchURL();
-    }
-
-    public int getProblemNumber() {
+    public String getProblemNumber() {
         return this.problemNumber;
     }
 
-    public String getSiteName() {
-        return this.siteName.toString();
+    public String getSiteList() {
+        return this.siteList.toString();
     }
 
     public String getProblemName() {

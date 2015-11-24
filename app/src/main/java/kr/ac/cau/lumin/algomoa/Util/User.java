@@ -1,6 +1,5 @@
 package kr.ac.cau.lumin.algomoa.Util;
 
-import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,28 +8,32 @@ import java.util.Collection;
  * Created by Lumin on 2015-11-21.
  */
 public class User {
+    private static User user;
     private ArrayList<LanguageList> favoriteLanguageList;
     private ArrayList<AlgorithmSite> favoriteAlgorithmList;
 
-    public User()
+    public synchronized User getInstance() {
+        if (user == null) {
+            user = new User();
+        }
+
+        return user;
+    }
+
+    private User()
     {
         this.favoriteAlgorithmList = new ArrayList<>();
         this.favoriteLanguageList = new ArrayList<>();
-    }
-
-    public User(Collection<AlgorithmSite> siteCollection, Collection<LanguageList> languageCollection) {
-        this.favoriteAlgorithmList = new ArrayList<>(siteCollection);
-        this.favoriteLanguageList = new ArrayList<>(languageCollection);
     }
 
     public void addNewFavoriteSite(AlgorithmSite newSite) {
         this.favoriteAlgorithmList.add(newSite);
     }
 
-    public void deleteFavoriteSite(SiteName deleteSiteName) throws InvalidObjectException {
+    public void deleteFavoriteSite(SiteList deleteSiteList) throws InvalidObjectException {
         for (int i = 0; i < this.favoriteAlgorithmList.size(); i++) {
             AlgorithmSite favoriteSite = this.favoriteAlgorithmList.get(i);
-            if (favoriteSite.getSiteName().toString().equals(deleteSiteName.toString())) {
+            if (favoriteSite.getSiteName().toString().equals(deleteSiteList.toString())) {
                 this.favoriteAlgorithmList.remove(i);
                 break;
             }

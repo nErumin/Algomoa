@@ -5,6 +5,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Lumin on 2015-11-23.
  */
-public class AlgomoaSQLHelper extends SQLiteOpenHelper {
+//public class AlgomoaSQLHelper extends SQLiteOpenHelper {
 
-}
+//}

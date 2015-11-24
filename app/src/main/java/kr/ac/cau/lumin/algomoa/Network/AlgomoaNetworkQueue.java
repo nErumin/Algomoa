@@ -1,6 +1,9 @@
 package kr.ac.cau.lumin.algomoa.Network;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Debug;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -10,6 +13,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Lumin on 2015-11-21.
  */
@@ -17,6 +24,8 @@ public class AlgomoaNetworkQueue implements Response.ErrorListener {
     private static AlgomoaNetworkQueue algomoaQueue;
     private static RequestQueue requestQueue;
     private static Context queueContext;
+    private static String LOG_TAG = "HTTP GET";
+
 
     public static synchronized AlgomoaNetworkQueue getInstance(Context context) {
         if (algomoaQueue == null) {
@@ -49,18 +58,28 @@ public class AlgomoaNetworkQueue implements Response.ErrorListener {
         return postResult;
     }
 
-    public String sendHttpGetRequest(Transmittable transmittable) {
-        final String getRequestResult = null;
+    public void sendHttpGetRequest(Transmittable transmittable, final String[] responseValueContainer) {
         // TODO : GET Operation
-        StringRequest request = new StringRequest(Request.Method.GET, transmittable.getRequestURL(), new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, "http://codeforces.com/api/problemset.problems", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                getRequestResult = response;
+                Log.e(LOG_TAG, response);
+                try {
+
+                    JSONObject test = new JSONObject(response);
+                    JSONArray test_2 =  test.getJSONObject("result").getJSONArray("problems");
+
+                    for (int i = 0; i < test_2.length(); i++) {
+                        Log.e("HTTP TEST", test_2.getJSONObject(i).getInt("contestId") + "");
+                        Log.e("HTTP TEST", test_2.getJSONObject(i).getString("index") + "");
+                    }
+                } catch (JSONException e) {
+
+                }
             }
         }, this);
 
         requestQueue.add(request);
-        return getRequestResult;
     }
 
     @Override
