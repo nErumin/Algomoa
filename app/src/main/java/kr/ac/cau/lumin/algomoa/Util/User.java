@@ -4,6 +4,9 @@ import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.AlgorithmSite;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
+
 /**
  * Created by Lumin on 2015-11-21.
  */

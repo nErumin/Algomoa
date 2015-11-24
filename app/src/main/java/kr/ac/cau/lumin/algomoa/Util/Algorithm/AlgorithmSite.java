@@ -1,20 +1,22 @@
-package kr.ac.cau.lumin.algomoa.Util;
+package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 
-import android.content.res.Resources;
+import android.util.Log;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 /**
  * Created by Lumin on 2015-11-21.
  */
-public class AlgorithmSite {
+public abstract class AlgorithmSite {
     private ArrayList<Problem> containedProblems;
     private SiteList name;
 
     public AlgorithmSite(SiteList siteList) {
         this.name = siteList;
+        this.containedProblems = new ArrayList<>();
     }
 
     public void addProblem(Problem problem) throws InvalidObjectException {
@@ -26,21 +28,26 @@ public class AlgorithmSite {
         Collections.sort(this.containedProblems);
     }
 
-    public void deleteProblem(String problemNumber) throws Resources.NotFoundException {
+    public void addProblem(Collection<Problem> problems) throws InvalidObjectException {
+        this.containedProblems.addAll(problems);
+        Collections.sort(this.containedProblems);
+    }
+
+    public void deleteProblem(int problemNumber) throws InvalidObjectException {
         Problem targetProblem = this.findProblem(problemNumber);
 
         if (targetProblem == null) {
-            throw new Resources.NotFoundException("Cannot find problem in this site that has this problem Number : " + problemNumber);
+            throw new InvalidObjectException("Cannot find problem in this site that has this problem Number : " + problemNumber);
         }
 
         this.containedProblems.remove(targetProblem);
     }
 
-    public Problem findProblem(String problemNumber) {
+    public Problem findProblem(int problemNumber) {
         Problem foundProblem = null;
 
         for (Problem problem : this.containedProblems) {
-            if (problem.getProblemNumber().equals(problemNumber)) {
+            if (problem.getProblemNumber() == problemNumber) {
                 foundProblem = problem;
             }
         }
@@ -53,6 +60,6 @@ public class AlgorithmSite {
     }
 
     public Problem[] getContainedProblems() {
-        return (Problem[]) this.containedProblems.toArray();
+        return this.containedProblems.toArray(new Problem[this.containedProblems.size()]);
     }
 }

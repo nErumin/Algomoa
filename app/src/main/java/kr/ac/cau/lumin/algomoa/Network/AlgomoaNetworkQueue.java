@@ -60,15 +60,18 @@ public class AlgomoaNetworkQueue  {
 
     public void sendHttpGetRequest(Transmittable transmittable, final NetworkListener networkListener) {
         // TODO : GET Operation
-        StringRequest request = new StringRequest(Request.Method.GET, "http://codeforces.com/api/problemset.problems", new Response.Listener<String>() {
+
+        Log.e("Test", "GET Request Reached");
+        Log.e("Test", transmittable.getRequestURL());
+        StringRequest request = new StringRequest(Request.Method.GET, transmittable.getRequestURL(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                networkListener.executeOnNetwork();
+                networkListener.executeOnNetwork(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                networkListener.executeFailOnNetwork();
+                networkListener.executeFailOnNetwork(error.getMessage());
             }
         });
 

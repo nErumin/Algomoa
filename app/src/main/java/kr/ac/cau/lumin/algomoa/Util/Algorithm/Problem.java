@@ -1,4 +1,4 @@
-package kr.ac.cau.lumin.algomoa.Util;
+package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 
 import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 
@@ -8,9 +8,9 @@ import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 public abstract class Problem implements Comparable, Transmittable {
     private SiteList siteList;
     protected String problemName;
-    protected String problemNumber;
+    protected int problemNumber;
 
-    public Problem(SiteList siteList, String problemNumber, String problemName) {
+    public Problem(SiteList siteList, int problemNumber, String problemName) {
         this.siteList = siteList;
         this.problemNumber = problemNumber;
         this.problemName = problemName;
@@ -20,13 +20,17 @@ public abstract class Problem implements Comparable, Transmittable {
     public int compareTo(Object another) {
         if (another instanceof Problem) {
             Problem anotherProblem = (Problem) another;
-            return this.problemNumber.compareTo(anotherProblem.getProblemNumber());
+            if (this.problemNumber == anotherProblem.problemNumber) {
+                return 0;
+            }
+
+            return this.problemNumber < anotherProblem.problemNumber ? -1 : 1;
         } else {
             return 0;
         }
     }
 
-    public String getProblemNumber() {
+    public int getProblemNumber() {
         return this.problemNumber;
     }
 

@@ -1,22 +1,33 @@
 package kr.ac.cau.lumin.algomoa.Network;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v4.content.SharedPreferencesCompat;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDialog;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InvalidObjectException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.CodeforcesProblem;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
-import kr.ac.cau.lumin.algomoa.Util.Problem;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 
 /**
  * Created by Lumin on 2015-11-24.
  */
 public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> implements NetworkListener {
     private Context parsingContext;
-    private AppCompatDialog contextDialog;
+    private ProgressDialog contextDialog;
     private PostTaskListener taskListener;
 
     public ParsingTask(Context parsingContext, PostTaskListener taskListener) {
@@ -26,13 +37,15 @@ public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> imple
 
     @Override
     protected void onPreExecute() {
-        this.contextDialog = new AppCompatDialog(this.parsingContext);
+        this.contextDialog = ProgressDialog.show(this.parsingContext, "", "Codeforces API의 응답을 기다리는 중입니다...", false, false);
         this.contextDialog.show();
+
         super.onPreExecute();
     }
 
     @Override
     protected ArrayList<Problem> doInBackground(Void... params) {
+        AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(Codeforces.getInstance(), this);
         return null;
     }
 
@@ -42,13 +55,23 @@ public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> imple
     }
 
     @Override
-    public void executeOnNetwork() {
-        this.contextDialog.dismiss();
-        this.taskListener.executeOnPostTask();
+    public void executeOnNetwork(String response) {
+        try {
+            Log.e("Test", response);
+            ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
+            Codeforces.getInstance().addProblem(codeforcesProblemList);
+            Log.e("Test", Codeforces.getInstance().getContainedProblems()[0].getProblemName());
+            this.contextDialog.dismiss();
+            //this.taskListener.executeOnPostTask();
+        } catch (InvalidObjectException e) {
+            Toast.makeText(parsingContext, "Codeforces API를 불러오는 과정에 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
-    public void executeFailOnNetwork() {
-
+    public void executeFailOnNetwork(String errorResponse) {
+        Log.e("Test", "Failed Execute");
+        this.contextDialog.dismiss();
+       // this.taskListener.executeOnPostTask();
     }
 }

@@ -1,4 +1,4 @@
-package kr.ac.cau.lumin.algomoa.Util;
+package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 
 import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 
@@ -8,19 +8,9 @@ import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 public class CodeforcesProblem extends Problem {
     private String problemIndex;
 
-    public CodeforcesProblem(String problemNumber, String problemName) {
+    public CodeforcesProblem(int problemNumber, String problemIndex, String problemName) {
         super(SiteList.Codeforces, problemNumber, problemName);
-        this.splitProblemNumber();
-    }
-
-    private void splitProblemNumber() {
-        for (int i = 0; i < super.problemNumber.length(); i++) {
-            if (super.problemNumber.charAt(i) > '9') {
-                this.problemIndex = super.problemNumber.substring(i, super.problemNumber.length());
-                super.problemNumber = super.problemNumber.substring(0, i);
-                break;
-            }
-        }
+        this.problemIndex = problemIndex;
     }
 
     @Override
@@ -30,6 +20,16 @@ public class CodeforcesProblem extends Problem {
         requestUrlBuilder.append(this.problemIndex + Transmittable.SPERATOR);
 
         return requestUrlBuilder.toString();
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        CodeforcesProblem anotherProblem = (CodeforcesProblem) another;
+        if (anotherProblem.problemNumber != this.problemNumber) {
+            return super.compareTo(another);
+        } else {
+            return this.problemIndex.compareTo(anotherProblem.problemIndex);
+        }
     }
 
     @Override
