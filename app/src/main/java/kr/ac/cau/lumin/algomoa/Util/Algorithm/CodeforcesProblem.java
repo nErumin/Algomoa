@@ -31,9 +31,4 @@ public class CodeforcesProblem extends Problem {
             return this.problemIndex.compareTo(anotherProblem.problemIndex);
         }
     }
-
-    @Override
-    public String getProblemName() {
-        return super.problemName + this.problemIndex;
-    }
 }

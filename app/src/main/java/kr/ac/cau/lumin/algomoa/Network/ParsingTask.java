@@ -57,10 +57,8 @@ public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> imple
     @Override
     public void executeOnNetwork(String response) {
         try {
-            Log.e("Test", response);
             ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
             Codeforces.getInstance().addProblem(codeforcesProblemList);
-            Log.e("Test", Codeforces.getInstance().getContainedProblems()[0].getProblemName());
             this.contextDialog.dismiss();
             //this.taskListener.executeOnPostTask();
         } catch (InvalidObjectException e) {

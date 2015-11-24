@@ -18,7 +18,7 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
     private static String CODEFORCES_API = "http://codeforces.com/api/";
     private static Codeforces siteInstance;
 
-    public static Codeforces getInstance() {
+    public static synchronized Codeforces getInstance() {
         if (siteInstance == null) {
             siteInstance = new Codeforces();
         }
@@ -57,7 +57,7 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
     }
 
     private enum CodeforcesApiList {
-        Problem("problemset.problems");
+        Problem("problemset.problems"), Contest("");
 
         private String baseSearchURL;
 
