@@ -20,7 +20,7 @@ import org.json.JSONObject;
 /**
  * Created by Lumin on 2015-11-21.
  */
-public class AlgomoaNetworkQueue implements Response.ErrorListener {
+public class AlgomoaNetworkQueue  {
     private static AlgomoaNetworkQueue algomoaQueue;
     private static RequestQueue requestQueue;
     private static Context queueContext;
@@ -58,32 +58,20 @@ public class AlgomoaNetworkQueue implements Response.ErrorListener {
         return postResult;
     }
 
-    public void sendHttpGetRequest(Transmittable transmittable, final String[] responseValueContainer) {
+    public void sendHttpGetRequest(Transmittable transmittable, final NetworkListener networkListener) {
         // TODO : GET Operation
         StringRequest request = new StringRequest(Request.Method.GET, "http://codeforces.com/api/problemset.problems", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(LOG_TAG, response);
-                try {
-
-                    JSONObject test = new JSONObject(response);
-                    JSONArray test_2 =  test.getJSONObject("result").getJSONArray("problems");
-
-                    for (int i = 0; i < test_2.length(); i++) {
-                        Log.e("HTTP TEST", test_2.getJSONObject(i).getInt("contestId") + "");
-                        Log.e("HTTP TEST", test_2.getJSONObject(i).getString("index") + "");
-                    }
-                } catch (JSONException e) {
-
-                }
+                networkListener.executeOnNetwork();
             }
-        }, this);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                networkListener.executeFailOnNetwork();
+            }
+        });
 
         requestQueue.add(request);
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Toast.makeText(queueContext, "페이지를 불러오는 중 문제가 발생하였습니다.", Toast.LENGTH_SHORT).show();
     }
 }
