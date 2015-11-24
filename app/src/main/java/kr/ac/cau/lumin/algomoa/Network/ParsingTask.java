@@ -68,7 +68,7 @@ public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> imple
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        Log.e("Test", "Failed Execute");
+        Log.e("Test", "Fail//.ed Execute");
         this.contextDialog.dismiss();
        // this.taskListener.executeOnPostTask();
     }

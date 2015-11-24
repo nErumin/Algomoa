@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import kr.ac.cau.lumin.algomoa.Network.Crawlable;
 import kr.ac.cau.lumin.algomoa.Network.Parsable;
 import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 

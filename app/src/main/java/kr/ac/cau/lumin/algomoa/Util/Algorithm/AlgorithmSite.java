@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import kr.ac.cau.lumin.algomoa.Network.Crawlable;
+
 /**
  * Created by Lumin on 2015-11-21.
  */
-public abstract class AlgorithmSite {
+public abstract class AlgorithmSite implements Crawlable {
     private ArrayList<Problem> containedProblems;
     private SiteList name;
 
