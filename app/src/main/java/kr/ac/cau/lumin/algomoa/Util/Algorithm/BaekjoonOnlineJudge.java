@@ -23,7 +23,7 @@ public class BaekjoonOnlineJudge extends AlgorithmSite {
     @Override
     public String[] crawlContentFromHtml(String htmlContent) {
         // TODO : Implementation
-        
+
         return new String[0];
     }
 }

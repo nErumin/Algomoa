@@ -33,7 +33,8 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
 
     @Override
     public String getRequestURL() {
-        return CODEFORCES_API + CodeforcesApiList.Problem.getBaseSearchURL();
+        Log.e("Codeforces", CODEFORCES_API + APIList.CodeforcesProblem.getBaseSearchURL());
+        return CODEFORCES_API + APIList.CodeforcesProblem.getBaseSearchURL();
     }
 
     @Override
@@ -57,17 +58,8 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
         return codeforceProblemList;
     }
 
-    private enum CodeforcesApiList {
-        Problem("problemset.problems"), Contest("");
-
-        private String baseSearchURL;
-
-        CodeforcesApiList(String baseSearchURL) {
-            this.baseSearchURL = baseSearchURL;
-        }
-
-        public String getBaseSearchURL() {
-            return this.baseSearchURL;
-        }
+    @Override
+    public String[] crawlContentFromHtml(String htmlContent) {
+        return new String[0];
     }
 }

@@ -25,7 +25,7 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 /**
  * Created by Lumin on 2015-11-24.
  */
-public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> implements NetworkListener {
+public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
     private Context parsingContext;
     private ProgressDialog contextDialog;
     private PostTaskListener taskListener;
@@ -44,21 +44,25 @@ public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> imple
     }
 
     @Override
-    protected ArrayList<Problem> doInBackground(Void... params) {
+    protected Void doInBackground(Void... params) {
         AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(Codeforces.getInstance(), this);
         return null;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Problem> problems) {
-        super.onPostExecute(problems);
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
     }
 
     @Override
     public void executeOnNetwork(String response) {
         try {
+            SiteCrawlTask newCrawlTask = new SiteCrawlTask(parsingContext, this.taskListener);
             ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
             Codeforces.getInstance().addProblem(codeforcesProblemList);
+
+            newCrawlTask.execute();
             this.contextDialog.dismiss();
             //this.taskListener.executeOnPostTask();
         } catch (InvalidObjectException e) {
@@ -68,7 +72,7 @@ public class ParsingTask extends AsyncTask<Void, Void, ArrayList<Problem>> imple
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        Log.e("Test", "Fail//.ed Execute");
+        Log.e("Test", "Failed Execute");
         this.contextDialog.dismiss();
        // this.taskListener.executeOnPostTask();
     }
