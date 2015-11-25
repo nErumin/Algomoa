@@ -16,8 +16,8 @@ import kr.ac.cau.lumin.algomoa.Network.Transmittable;
  * Created by Lumin on 2015-11-24.
  */
 public class Codeforces extends AlgorithmSite implements Transmittable, Parsable<Problem> {
-    private static String CODEFORCES_API = "http://codeforces.com/api/";
     private static Codeforces siteInstance;
+    private APIList usingAPI;
 
     public static synchronized Codeforces getInstance() {
         if (siteInstance == null) {
@@ -29,12 +29,21 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
 
     private Codeforces() {
         super(SiteList.Codeforces);
+        this.usingAPI = APIList.CodeforcesProblem;
     }
 
+    /**
+     * 문제 리스트를 요청하는 API URL을 받아옵니다.
+     * @return 리스트 요청 API URL입니다.
+     */
     @Override
     public String getRequestURL() {
-        Log.e("Codeforces", CODEFORCES_API + APIList.CodeforcesProblem.getBaseSearchURL());
-        return CODEFORCES_API + APIList.CodeforcesProblem.getBaseSearchURL();
+        Log.e("CodeforcesRequestURL", SiteList.Codeforces.getBaseSearchURL() + this.usingAPI);
+        return SiteList.Codeforces.getBaseSearchURL() + this.usingAPI.getBaseSearchURL();
+    }
+
+    public void setUsingAPI(APIList usingAPI) {
+        this.usingAPI = usingAPI;
     }
 
     @Override

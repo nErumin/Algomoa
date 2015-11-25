@@ -45,12 +45,7 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
 
     @Override
     protected Void doInBackground(Void... params) {
-        AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(new Transmittable() {
-            @Override
-            public String getRequestURL() {
-                return "https://www.acmicpc.net/problem/1000";
-            }
-        }, this);
+        AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(crawlProblem, this);
         return null;
     }
 
@@ -62,27 +57,7 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
 
     @Override
     public void executeOnNetwork(String response) {
-        Source htmlSource = new Source(response);
-        List<Element> elementList = htmlSource.getAllElements(HTMLElementName.DIV);
-        Hashtable<String, ArrayList<String>> infoTable = new Hashtable<>();
-        infoTable.put("problem_description", new ArrayList<String>());
-        infoTable.put("problem_input", new ArrayList<String>());
-        infoTable.put("problem_output", new ArrayList<String>());
-        infoTable.put("sample_input_1", new ArrayList<String>());
-        infoTable.put("sample_output_1", new ArrayList<String>());
-
-        for (int i = 0; i < elementList.size(); i++) {
-            Element element = elementList.get(i);
-            String attrValue = element.getAttributeValue("id");
-            TextExtractor extractor = element.getTextExtractor();
-            if (attrValue != null) {
-                attrValue = attrValue.replaceAll("-", "_");
-                if (infoTable.containsKey(attrValue)) {
-                    infoTable.get(attrValue).add(extractor.toString());
-                }
-            }
-        }
-
+        crawlProblem.crawlContentFromHtml(response);
         this.contextDialog.dismiss();
     }
 

@@ -61,11 +61,10 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
         try {
             SiteCrawlTask newCrawlTask = new SiteCrawlTask(BaekjoonOnlineJudge.getInstance(), parsingContext, this.taskListener);
             ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
-            Codeforces.getInstance().addProblem(codeforcesProblemList);
 
+            Codeforces.getInstance().addProblem(codeforcesProblemList);
             newCrawlTask.execute();
             this.contextDialog.dismiss();
-            //this.taskListener.executeOnPostTask();
         } catch (InvalidObjectException e) {
             Toast.makeText(parsingContext, "Codeforces API를 불러오는 과정에 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
         }
@@ -73,11 +72,10 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        Log.e("Test", "Failed Execute");
-        Toast.makeText(parsingContext, "Codeforces API 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
         ParsingTask redoingTask = new ParsingTask(parsingContext, this.taskListener);
+        Toast.makeText(parsingContext, "Codeforces API 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
+
         redoingTask.execute();
         this.contextDialog.dismiss();
-       // this.taskListener.executeOnPostTask();
     }
 }

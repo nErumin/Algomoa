@@ -8,11 +8,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 import kr.ac.cau.lumin.algomoa.Network.Crawlable;
+import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 
 /**
  * Created by Lumin on 2015-11-21.
  */
-public abstract class AlgorithmSite implements Crawlable {
+public abstract class AlgorithmSite implements Crawlable, Transmittable {
     private ArrayList<Problem> containedProblems;
     private SiteList name;
 

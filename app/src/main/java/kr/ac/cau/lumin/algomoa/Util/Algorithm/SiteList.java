@@ -4,9 +4,9 @@ package kr.ac.cau.lumin.algomoa.Util.Algorithm;
  * Created by Lumin on 2015-11-21.
  */
 public enum SiteList {
-    Codeforces("http://codeforces.com/problemset/problem/"),
+    Codeforces("http://codeforces.com/"),
     Algospot("https://algospot.com/judge/problem/read/"),
-    BaekjoonOnlineJudge("https://www.acmicpc.net/problem/");
+    BaekjoonOnlineJudge("https://www.acmicpc.net/");
 
     private String baseSearchURL;
 

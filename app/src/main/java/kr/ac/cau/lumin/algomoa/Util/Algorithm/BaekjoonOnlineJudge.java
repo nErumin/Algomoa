@@ -33,6 +33,16 @@ public class BaekjoonOnlineJudge extends AlgorithmSite {
     }
 
     @Override
+    public String getRequestURL() {
+        // TODO : Implement
+        return null;
+    }
+
+    /**
+     *
+     * @return ArrayList of Problem
+     */
+    @Override
     public Object crawlContentFromHtml(String htmlContent) {
         Source htmlSource = new Source(htmlContent);
         List<Element> numberElementList = htmlSource.getAllElements(HTMLElementName.TD);
@@ -40,8 +50,9 @@ public class BaekjoonOnlineJudge extends AlgorithmSite {
 
         ArrayList<Integer> problemNumList = new ArrayList<>();
         ArrayList<String> problemNameList = new ArrayList<>();
-        ArrayList<BaekjoonProblem> problemList = new ArrayList<>();
+        ArrayList<Problem> problemList = new ArrayList<>();
 
+        // Div 태그 중 문제번호가 쓰여있는 곳을 찾아 추출.
         for (int i = 0; i < numberElementList.size(); i++) {
             Element numberElement = numberElementList.get(i);
             String numberAttrValue = numberElement.getAttributeValue("class");
@@ -52,6 +63,7 @@ public class BaekjoonOnlineJudge extends AlgorithmSite {
             }
         }
 
+        // A 태그 중 문제이름이 쓰여있는 곳을 찾아 추출.
         for (int i = 0; i < nameElementList.size(); i++) {
             Element nameElement = nameElementList.get(i);
             String nameAttrValue = nameElement.getAttributeValue("href");
@@ -68,6 +80,7 @@ public class BaekjoonOnlineJudge extends AlgorithmSite {
             }
         }
 
+        // 짝을 지어 문제를 형성.
         for (int i = 0; i < problemNumList.size(); i++) {
             problemList.add(new BaekjoonProblem(problemNumList.get(i), problemNameList.get(i)));
         }

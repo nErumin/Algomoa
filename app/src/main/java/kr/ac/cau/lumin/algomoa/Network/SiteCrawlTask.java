@@ -18,6 +18,7 @@ import java.util.List;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.AlgorithmSite;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonProblem;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
 /**
@@ -60,9 +61,14 @@ public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements Networ
 
     @Override
     public void executeOnNetwork(String response) {
+        try {
+            ArrayList<Problem> problems = (ArrayList<Problem>) BaekjoonOnlineJudge.getInstance().crawlContentFromHtml(response);
+            BaekjoonOnlineJudge.getInstance().addProblem(problems);
 
-        ProblemCrawlTask problemCrawlTask = new ProblemCrawlTask(BaekjoonOnlineJudge.getInstance().getContainedProblems()[0], parsingContext, this.taskListener);
-        problemCrawlTask.execute();
+        } catch (InvalidObjectException e) {
+
+        }
+
         this.contextDialog.dismiss();
     }
 

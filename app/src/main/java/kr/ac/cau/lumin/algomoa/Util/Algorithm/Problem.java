@@ -1,11 +1,12 @@
 package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 
+import kr.ac.cau.lumin.algomoa.Network.Crawlable;
 import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 
 /**
  * Created by Lumin on 2015-11-21.
  */
-public abstract class Problem implements Comparable, Transmittable {
+public abstract class Problem implements Comparable, Transmittable, Crawlable {
     private SiteList siteList;
     protected String problemName;
     protected int problemNumber;

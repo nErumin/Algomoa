@@ -20,17 +20,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (prefs.getBoolean("FirstExecute", false)) {
+        //!prefs.getBoolean("FirstExecute", false)
+        if (true) {
+            ParsingTask parsingTask = new ParsingTask(MainActivity.this, new MainActivityPostListener());
             prefs.edit().putBoolean("FirstExecute", true).apply();
+            parsingTask.execute();
         }
 
-        Log.e("Visit", prefs.getBoolean("FirstExecute", false) + "");
-        //ParsingTask parsingTask = new ParsingTask(MainActivity.this, new MainActivityPostListener());
-        //parsingTask.execute();
     }
 
     private class MainActivityPostListener implements PostTaskListener {

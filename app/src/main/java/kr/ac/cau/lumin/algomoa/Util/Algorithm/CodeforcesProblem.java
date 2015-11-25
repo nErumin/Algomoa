@@ -7,6 +7,7 @@ import kr.ac.cau.lumin.algomoa.Network.Transmittable;
  */
 public class CodeforcesProblem extends Problem {
     private String problemIndex;
+    private static String BASIC_PROBLEM_URL = "problemset/problem/";
 
     public CodeforcesProblem(int problemNumber, String problemIndex, String problemName) {
         super(SiteList.Codeforces, problemNumber, problemName);
@@ -15,11 +16,17 @@ public class CodeforcesProblem extends Problem {
 
     @Override
     public String getRequestURL() {
-        StringBuilder requestUrlBuilder = new StringBuilder(SiteList.Codeforces.getBaseSearchURL());
+        StringBuilder requestUrlBuilder = new StringBuilder(SiteList.Codeforces.getBaseSearchURL() + BASIC_PROBLEM_URL);
         requestUrlBuilder.append(super.problemNumber + Transmittable.SPERATOR);
         requestUrlBuilder.append(this.problemIndex + Transmittable.SPERATOR);
 
         return requestUrlBuilder.toString();
+    }
+
+    @Override
+    public Object crawlContentFromHtml(String htmlContent) {
+        // TODO : Crawling
+        return null;
     }
 
     @Override
@@ -30,5 +37,9 @@ public class CodeforcesProblem extends Problem {
         } else {
             return this.problemIndex.compareTo(anotherProblem.problemIndex);
         }
+    }
+
+    public String getProblemIndex() {
+        return problemIndex;
     }
 }
