@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
@@ -38,7 +39,7 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
 
     @Override
     protected void onPreExecute() {
-        this.contextDialog = ProgressDialog.show(this.parsingContext, "", crawlProblem.getSiteList().toString() + "의 문제 리스트를 불러오는 중입니다...", false, false);
+        this.contextDialog = ProgressDialog.show(this.parsingContext, "", crawlProblem.getSiteList().toString() + "의 문제를 불러오는 중입니다...", false, false);
         this.contextDialog.show();
         super.onPreExecute();
     }
@@ -58,11 +59,16 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
     @Override
     public void executeOnNetwork(String response) {
         crawlProblem.crawlContentFromHtml(response);
+        this.taskListener.executeOnPostTask();
         this.contextDialog.dismiss();
     }
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
+        ParsingTask redoingTask = new ParsingTask(parsingContext, this.taskListener);
+        Toast.makeText(parsingContext, crawlProblem.getSiteList().toString() + "의 문제 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
 
+        redoingTask.execute();
+        this.contextDialog.dismiss();
     }
 }

@@ -16,10 +16,16 @@ import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 public abstract class AlgorithmSite implements Crawlable, Transmittable {
     private ArrayList<Problem> containedProblems;
     private SiteList name;
+    protected int maxProblemNum;
 
     public AlgorithmSite(SiteList siteList) {
         this.name = siteList;
+        this.maxProblemNum = 0;
         this.containedProblems = new ArrayList<>();
+    }
+
+    public int getMaxProblemSet() {
+        return 0;
     }
 
     public void addProblem(Problem problem) throws InvalidObjectException {
@@ -29,6 +35,10 @@ public abstract class AlgorithmSite implements Crawlable, Transmittable {
 
         this.containedProblems.add(problem);
         Collections.sort(this.containedProblems);
+    }
+
+    public void refreshProblemNumber() {
+        this.maxProblemNum = 0;
     }
 
     public void addProblem(Collection<Problem> problems) throws InvalidObjectException {

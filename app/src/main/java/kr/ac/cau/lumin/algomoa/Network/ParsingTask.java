@@ -17,6 +17,8 @@ import java.io.InvalidObjectException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.CodeforcesProblem;
@@ -58,16 +60,16 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     public void executeOnNetwork(String response) {
-        try {
-            SiteCrawlTask newCrawlTask = new SiteCrawlTask(BaekjoonOnlineJudge.getInstance(), parsingContext, this.taskListener);
-            ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
+        SiteCrawlTask newCrawlTask = new SiteCrawlTask(Algospot.getInstance(), parsingContext, this.taskListener);
+        ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
 
-            Codeforces.getInstance().addProblem(codeforcesProblemList);
-            newCrawlTask.execute();
-            this.contextDialog.dismiss();
-        } catch (InvalidObjectException e) {
-            Toast.makeText(parsingContext, "Codeforces API를 불러오는 과정에 문제가 발생하였습니다.", Toast.LENGTH_LONG).show();
+        for (Problem problem : codeforcesProblemList) {
+            AlgomoaSQLHelper.getInstance(parsingContext).addProblem(problem);
+            Log.e("Site Parsing Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
         }
+
+        newCrawlTask.execute();
+        this.contextDialog.dismiss();
     }
 
     @Override

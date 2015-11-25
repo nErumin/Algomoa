@@ -5,7 +5,7 @@ package kr.ac.cau.lumin.algomoa.Util.Algorithm;
  */
 public enum SiteList {
     Codeforces("http://codeforces.com/"),
-    Algospot("https://algospot.com/judge/problem/read/"),
+    Algospot("https://algospot.com/"),
     BaekjoonOnlineJudge("https://www.acmicpc.net/");
 
     private String baseSearchURL;

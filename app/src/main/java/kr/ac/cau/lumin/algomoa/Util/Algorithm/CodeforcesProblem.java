@@ -1,9 +1,18 @@
 package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 
+import net.htmlparser.jericho.Element;
+import net.htmlparser.jericho.HTMLElementName;
+import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.TextExtractor;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+
 import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 
 /**
- * Created by CAUCSE on 2015-11-24.
+ * Created by Lumin 2015-11-24.
  */
 public class CodeforcesProblem extends Problem {
     private String problemIndex;
@@ -26,7 +35,28 @@ public class CodeforcesProblem extends Problem {
     @Override
     public Object crawlContentFromHtml(String htmlContent) {
         // TODO : Crawling
-        return null;
+        Source htmlSource = new Source(htmlContent);
+        List<Element> elementList = htmlSource.getAllElements(HTMLElementName.DIV);
+        Hashtable<String, ArrayList<String>> infoTable = new Hashtable<>();
+        infoTable.put("problem_description", new ArrayList<String>());
+        infoTable.put("problem_input", new ArrayList<String>());
+        infoTable.put("problem_output", new ArrayList<String>());
+        infoTable.put("sample_input_1", new ArrayList<String>());
+        infoTable.put("sample_output_1", new ArrayList<String>());
+
+        for (int i = 0; i < elementList.size(); i++) {
+            Element element = elementList.get(i);
+            String attrValue = element.getAttributeValue("id");
+            TextExtractor extractor = element.getTextExtractor();
+            if (attrValue != null) {
+                attrValue = attrValue.replaceAll("-", "_");
+                if (infoTable.containsKey(attrValue)) {
+                    infoTable.get(attrValue).add(extractor.toString());
+                }
+            }
+        }
+
+        return infoTable;
     }
 
     @Override

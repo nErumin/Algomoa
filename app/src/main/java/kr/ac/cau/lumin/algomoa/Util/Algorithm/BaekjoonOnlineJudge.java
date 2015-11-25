@@ -19,6 +19,8 @@ import kr.ac.cau.lumin.algomoa.Network.Crawlable;
  */
 public class BaekjoonOnlineJudge extends AlgorithmSite {
     private static BaekjoonOnlineJudge siteInstance;
+    private static final int MAX_PROBLEMSET = 3;
+    // 최대 106페이지.
 
     public synchronized static BaekjoonOnlineJudge getInstance() {
         if (siteInstance == null) {
@@ -34,14 +36,14 @@ public class BaekjoonOnlineJudge extends AlgorithmSite {
 
     @Override
     public String getRequestURL() {
-        // TODO : Implement
-        return null;
+        return SiteList.BaekjoonOnlineJudge.getBaseSearchURL() + "/problemset/";
     }
 
-    /**
-     *
-     * @return ArrayList of Problem
-     */
+    @Override
+    public int getMaxProblemSet() {
+        return MAX_PROBLEMSET;
+    }
+
     @Override
     public Object crawlContentFromHtml(String htmlContent) {
         Source htmlSource = new Source(htmlContent);
@@ -83,6 +85,7 @@ public class BaekjoonOnlineJudge extends AlgorithmSite {
         // 짝을 지어 문제를 형성.
         for (int i = 0; i < problemNumList.size(); i++) {
             problemList.add(new BaekjoonProblem(problemNumList.get(i), problemNameList.get(i)));
+            super.maxProblemNum++;
         }
 
         return problemList;

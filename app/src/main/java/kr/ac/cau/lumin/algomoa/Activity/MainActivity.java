@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatDialog;
 import android.util.Log;
 
 import kr.ac.cau.lumin.algomoa.Network.ParsingTask;
+import kr.ac.cau.lumin.algomoa.Network.SiteCrawlTask;
 import kr.ac.cau.lumin.algomoa.R;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 

@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonProblem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.CodeforcesProblem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
@@ -21,13 +24,19 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VER = 1;
     private static final String DATABASE_NAME = "AlgomoaDataBase";
 
-    private static final String CREATE_PROBLEM_TABLE = "";
-
     private static final String TABLE_PROBLEM = "Problem";
+
     private static final String COLUMN_PROBLEM_SITE = "site_name";
     private static final String COLUMN_PROBLEM_CODE = "prob_code";
     private static final String COLUMN_PROBLEM_NAME = "prob_name";
     private static final String COLUMN_PROBLEM_URL = "url";
+
+    private static final String CREATE_PROBLEM_TABLE = "CREATE TABLE " + TABLE_PROBLEM + " ( " +
+            COLUMN_PROBLEM_SITE + " varchar(10), " +
+            COLUMN_PROBLEM_CODE + " varchar(20), " +
+            COLUMN_PROBLEM_NAME + " varchar(20), " +
+            COLUMN_PROBLEM_URL + " varchar(100), " +
+            "PRIMARY KEY (" + COLUMN_PROBLEM_SITE + ", " + COLUMN_PROBLEM_CODE + " ) " + " )";
 
     public static synchronized AlgomoaSQLHelper getInstance(Context context) {
         if (sqlHelper == null) {
@@ -87,5 +96,44 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
 
         long rowID = db.insert(TABLE_PROBLEM, null, values);
         return rowID;
+    }
+
+    public ArrayList<Problem> getAllProblems(SiteList site) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Problem> problems = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PROBLEM + " WHERE " + COLUMN_PROBLEM_SITE + " = " + site.toString();
+        Log.e("Database", "Query : " + selectQuery);
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String problemName = cursor.getString(cursor.getColumnIndex(COLUMN_PROBLEM_NAME));
+                String problemCode = cursor.getString(cursor.getColumnIndex(COLUMN_PROBLEM_CODE));
+
+                switch (site) {
+                    case Codeforces:
+                    {
+                        int problemNumber = Integer.parseInt(problemCode.substring(0, problemCode.length() - 1));
+                        String problemIndex = problemCode.substring(problemCode.length() - 1, problemCode.length());
+                        problems.add(new CodeforcesProblem(problemNumber, problemIndex, problemName));
+                        break;
+                    }
+                    case BaekjoonOnlineJudge:
+                    {
+                        int problemNumber = Integer.parseInt(problemCode);
+                        problems.add(new BaekjoonProblem(problemNumber, problemName));
+                        break;
+                    }
+                    case Algospot:
+                    {
+                        // TODO : Algospot
+                        break;
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return problems;
     }
 }
