@@ -11,9 +11,13 @@ import net.htmlparser.jericho.HTMLElements;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.TextExtractor;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.AlgorithmSite;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonProblem;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
 /**
@@ -23,10 +27,12 @@ public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements Networ
     private Context parsingContext;
     private ProgressDialog contextDialog;
     private PostTaskListener taskListener;
+    private AlgorithmSite crawlSite;
 
-    public SiteCrawlTask(Context parsingContext, PostTaskListener taskListener) {
+    public SiteCrawlTask(AlgorithmSite crawlSite, Context parsingContext, PostTaskListener taskListener) {
         this.parsingContext = parsingContext;
         this.taskListener = taskListener;
+        this.crawlSite = crawlSite;
     }
 
     @Override
@@ -58,7 +64,7 @@ public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements Networ
         List<Element> numberElementList = htmlSource.getAllElements(HTMLElementName.TD);
         List<Element> nameElementList = htmlSource.getAllElements(HTMLElementName.A);
 
-            ArrayList<String> problemNumList = new ArrayList<>();
+            ArrayList<Integer> problemNumList = new ArrayList<>();
             ArrayList<String> problemNameList = new ArrayList<>();
 
             for (int i = 0; i < numberElementList.size(); i++) {
@@ -67,7 +73,7 @@ public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements Networ
 
                 if (numberAttrValue != null && numberAttrValue.equals("list_problem_id")) {
                     TextExtractor extractor = numberElement.getTextExtractor();
-                    problemNumList.add(extractor.toString());
+                    problemNumList.add(Integer.parseInt(extractor.toString()));
                 }
             }
 
@@ -75,17 +81,28 @@ public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements Networ
             Element nameElement = nameElementList.get(i);
             String nameAttrValue = nameElement.getAttributeValue("href");
 
-            if (nameAttrValue != null && nameAttrValue.startsWith("/problem")) {
-                TextExtractor extractor = nameElement.getTextExtractor();
-                problemNameList.add(extractor.toString());
+            if (nameAttrValue != null && nameAttrValue.startsWith("/problem/")) {
+                try {
+                    Integer.parseInt(nameAttrValue.substring("/problem/".length(), nameAttrValue.length()));
+                    TextExtractor extractor = nameElement.getTextExtractor();
+                    problemNameList.add(extractor.toString());
+                } catch (NumberFormatException e) {
+                    Log.e("Jericho Exception", nameAttrValue);
+                    continue;
+                }
             }
         }
 
-
-
-        for (int i = 0; i < nameElementList.size(); i++) {
-            Log.e("Jericho Test", "ID : " + problemNumList.get(i)  + " Name : " + problemNameList.get(i));
+        for (int i = 0; i < problemNumList.size(); i++) {
+            try {
+                BaekjoonOnlineJudge.getInstance().addProblem(new BaekjoonProblem(problemNumList.get(i), problemNameList.get(i)));
+            } catch (InvalidObjectException e) {
+                continue;
+            }
         }
+
+        ProblemCrawlTask problemCrawlTask = new ProblemCrawlTask(BaekjoonOnlineJudge.getInstance().findProblem(1000), parsingContext, this.taskListener);
+        problemCrawlTask.execute();
         this.contextDialog.dismiss();
     }
 

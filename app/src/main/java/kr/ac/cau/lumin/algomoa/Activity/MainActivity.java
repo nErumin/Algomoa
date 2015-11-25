@@ -3,6 +3,7 @@ package kr.ac.cau.lumin.algomoa.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
 
 import kr.ac.cau.lumin.algomoa.Network.ParsingTask;
 import kr.ac.cau.lumin.algomoa.R;
@@ -20,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ParsingTask parsingTask = new ParsingTask(MainActivity.this, new MainActivityPostListener());
         parsingTask.execute();
+
+        AppCompatDialog a = new AppCompatDialog(this);
+        a.setTitle("aaaafjkldsafjd");
+        a.show();
     }
 
     private class MainActivityPostListener implements PostTaskListener {

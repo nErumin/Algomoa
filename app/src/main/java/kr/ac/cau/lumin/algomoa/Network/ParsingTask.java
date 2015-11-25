@@ -17,6 +17,7 @@ import java.io.InvalidObjectException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.CodeforcesProblem;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
@@ -58,7 +59,7 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
     @Override
     public void executeOnNetwork(String response) {
         try {
-            SiteCrawlTask newCrawlTask = new SiteCrawlTask(parsingContext, this.taskListener);
+            SiteCrawlTask newCrawlTask = new SiteCrawlTask(BaekjoonOnlineJudge.getInstance(), parsingContext, this.taskListener);
             ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
             Codeforces.getInstance().addProblem(codeforcesProblemList);
 
@@ -73,6 +74,9 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
     @Override
     public void executeFailOnNetwork(String errorResponse) {
         Log.e("Test", "Failed Execute");
+        Toast.makeText(parsingContext, "Codeforces API 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
+        ParsingTask redoingTask = new ParsingTask(parsingContext, this.taskListener);
+        redoingTask.execute();
         this.contextDialog.dismiss();
        // this.taskListener.executeOnPostTask();
     }

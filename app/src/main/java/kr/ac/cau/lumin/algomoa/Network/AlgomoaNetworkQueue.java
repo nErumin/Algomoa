@@ -6,6 +6,7 @@ import android.os.Debug;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,7 +26,7 @@ public class AlgomoaNetworkQueue  {
     private static RequestQueue requestQueue;
     private static Context queueContext;
     private static String LOG_TAG = "HTTP GET";
-
+    private static int maxDuration = 10000;
 
     public static synchronized AlgomoaNetworkQueue getInstance(Context context) {
         if (algomoaQueue == null) {
@@ -75,6 +76,7 @@ public class AlgomoaNetworkQueue  {
             }
         });
 
+        request.setRetryPolicy(new DefaultRetryPolicy(maxDuration, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
     }
 }
