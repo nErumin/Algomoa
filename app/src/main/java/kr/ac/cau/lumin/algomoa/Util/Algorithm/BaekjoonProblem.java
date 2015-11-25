@@ -5,7 +5,7 @@ package kr.ac.cau.lumin.algomoa.Util.Algorithm;
  */
 public class BaekjoonProblem extends Problem {
     public BaekjoonProblem(int problemNumber, String problemName) {
-        super(SiteList.Codeforces, problemNumber, problemName);
+        super(SiteList.BaekjoonOnlineJudge, problemNumber, problemName);
     }
 
     @Override

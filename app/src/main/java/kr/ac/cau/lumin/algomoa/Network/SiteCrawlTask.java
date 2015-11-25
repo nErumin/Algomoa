@@ -101,7 +101,7 @@ public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements Networ
             }
         }
 
-        ProblemCrawlTask problemCrawlTask = new ProblemCrawlTask(BaekjoonOnlineJudge.getInstance().findProblem(1000), parsingContext, this.taskListener);
+        ProblemCrawlTask problemCrawlTask = new ProblemCrawlTask(BaekjoonOnlineJudge.getInstance().getContainedProblems()[0], parsingContext, this.taskListener);
         problemCrawlTask.execute();
         this.contextDialog.dismiss();
     }

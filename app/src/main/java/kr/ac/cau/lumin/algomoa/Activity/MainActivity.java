@@ -21,10 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ParsingTask parsingTask = new ParsingTask(MainActivity.this, new MainActivityPostListener());
         parsingTask.execute();
-
-        AppCompatDialog a = new AppCompatDialog(this);
-        a.setTitle("aaaafjkldsafjd");
-        a.show();
     }
 
     private class MainActivityPostListener implements PostTaskListener {

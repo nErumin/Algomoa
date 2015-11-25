@@ -38,14 +38,19 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
 
     @Override
     protected void onPreExecute() {
-        this.contextDialog = ProgressDialog.show(this.parsingContext, "", "의 문제 리스트를 불러오는 중입니다...", false, false);
+        this.contextDialog = ProgressDialog.show(this.parsingContext, "", crawlProblem.getSiteList().toString() + "의 문제 리스트를 불러오는 중입니다...", false, false);
         this.contextDialog.show();
         super.onPreExecute();
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-
+        AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(new Transmittable() {
+            @Override
+            public String getRequestURL() {
+                return "https://www.acmicpc.net/problem/1000";
+            }
+        }, this);
         return null;
     }
 
@@ -58,26 +63,26 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
     @Override
     public void executeOnNetwork(String response) {
         Source htmlSource = new Source(response);
-        List<Element> elementList = htmlSource.getAllElements(HTMLElementName.SECTION);
+        List<Element> elementList = htmlSource.getAllElements(HTMLElementName.DIV);
         Hashtable<String, ArrayList<String>> infoTable = new Hashtable<>();
-        infoTable.put("description", new ArrayList<String>());
-        infoTable.put("input", new ArrayList<String>());
-        infoTable.put("output", new ArrayList<String>());
-        infoTable.put("sampleinput", new ArrayList<String>());
-        infoTable.put("sampledata", new ArrayList<String>());
-        infoTable.put("sampleoutput", new ArrayList<String>());
+        infoTable.put("problem_description", new ArrayList<String>());
+        infoTable.put("problem_input", new ArrayList<String>());
+        infoTable.put("problem_output", new ArrayList<String>());
+        infoTable.put("sample_input_1", new ArrayList<String>());
+        infoTable.put("sample_output_1", new ArrayList<String>());
 
         for (int i = 0; i < elementList.size(); i++) {
             Element element = elementList.get(i);
             String attrValue = element.getAttributeValue("id");
             TextExtractor extractor = element.getTextExtractor();
-
-            if (attrValue != null && infoTable.containsKey(attrValue)) {
-                infoTable.get(attrValue).add(attrValue);
+            if (attrValue != null) {
+                attrValue = attrValue.replaceAll("-", "_");
+                if (infoTable.containsKey(attrValue)) {
+                    infoTable.get(attrValue).add(extractor.toString());
+                }
             }
         }
 
-        //Log.e("Jericho Parse", infoTable.get("description"));
         this.contextDialog.dismiss();
     }
 

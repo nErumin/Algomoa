@@ -1,10 +1,24 @@
 package kr.ac.cau.lumin.algomoa.SQLite;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by Lumin on 2015-11-23.
  */
-//public class AlgomoaSQLHelper extends SQLiteOpenHelper {
+public class AlgomoaSQLHelper extends SQLiteOpenHelper {
 
-//}
+    public AlgomoaSQLHelper() {
+
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+    }
+}
