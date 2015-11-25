@@ -60,7 +60,6 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     public void executeOnNetwork(String response) {
-        SiteCrawlTask newCrawlTask = new SiteCrawlTask(Algospot.getInstance(), parsingContext, this.taskListener);
         ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
 
         for (Problem problem : codeforcesProblemList) {
@@ -68,7 +67,6 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
             Log.e("Site Parsing Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
         }
 
-        newCrawlTask.execute();
         this.contextDialog.dismiss();
     }
 

@@ -1,6 +1,7 @@
-package kr.ac.cau.lumin.algomoa.Util;
+package kr.ac.cau.lumin.algomoa.Util.Language;
 
 import kr.ac.cau.lumin.algomoa.Network.Transmittable;
+import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 
 /**
  * Created by Lumin on 2015-11-23.

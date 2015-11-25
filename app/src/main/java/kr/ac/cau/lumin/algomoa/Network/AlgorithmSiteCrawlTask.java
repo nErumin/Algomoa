@@ -26,13 +26,13 @@ import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 /**
  * Created by Lumin on 2015-11-25.
  */
-public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
+public class AlgorithmSiteCrawlTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
     private Context parsingContext;
     private ProgressDialog contextDialog;
     private PostTaskListener taskListener;
     private AlgorithmSite crawlSite;
 
-    public SiteCrawlTask(AlgorithmSite crawlSite, Context parsingContext, PostTaskListener taskListener) {
+    public AlgorithmSiteCrawlTask(AlgorithmSite crawlSite, Context parsingContext, PostTaskListener taskListener) {
         this.parsingContext = parsingContext;
         this.taskListener = taskListener;
         this.crawlSite = crawlSite;
@@ -75,8 +75,6 @@ public class SiteCrawlTask extends AsyncTask<Void, Void, Void> implements Networ
             Log.e("Site Crawling Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
         }
 
-        ProblemCrawlTask t = new ProblemCrawlTask(problems.get(0), parsingContext, taskListener);
-        t.execute();
         this.contextDialog.dismiss();
     }
 

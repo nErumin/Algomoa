@@ -1,16 +1,15 @@
 package kr.ac.cau.lumin.algomoa.Activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 
 import kr.ac.cau.lumin.algomoa.Network.ParsingTask;
-import kr.ac.cau.lumin.algomoa.Network.SiteCrawlTask;
+import kr.ac.cau.lumin.algomoa.Network.AlgorithmSiteCrawlTask;
 import kr.ac.cau.lumin.algomoa.R;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
 /**
@@ -28,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
         //!prefs.getBoolean("FirstExecute", false)
         if (true) {
             ParsingTask parsingTask = new ParsingTask(MainActivity.this, new MainActivityPostListener());
+            AlgorithmSiteCrawlTask baekjoonCrawlTask = new AlgorithmSiteCrawlTask(BaekjoonOnlineJudge.getInstance(), MainActivity.this, new MainActivityPostListener());
+            AlgorithmSiteCrawlTask algospotCrawlTask = new AlgorithmSiteCrawlTask(Algospot.getInstance(), MainActivity.this, new MainActivityPostListener());
             prefs.edit().putBoolean("FirstExecute", true).apply();
             parsingTask.execute();
+            baekjoonCrawlTask.execute();
+            algospotCrawlTask.execute();
         }
 
     }
@@ -37,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private class MainActivityPostListener implements PostTaskListener {
         @Override
         public void executeOnPostTask() {
-            Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
+            //startActivity(intent);
         }
     }
 }

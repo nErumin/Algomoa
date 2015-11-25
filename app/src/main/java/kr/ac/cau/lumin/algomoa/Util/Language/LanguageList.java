@@ -1,4 +1,4 @@
-package kr.ac.cau.lumin.algomoa.Util;
+package kr.ac.cau.lumin.algomoa.Util.Language;
 
 /**
  * Created by Lumin on 2015-11-21.
