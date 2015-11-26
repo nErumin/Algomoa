@@ -35,7 +35,7 @@ public class ReferenceSearchActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View view) {
-        //AlgomoaSQLHelper.getInstance(this).getAllReferences(LanguageList.Ruby);
+        AlgomoaSQLHelper.getInstance(this).getAllReferences(LanguageList.Ruby);
     }
 
     @Override

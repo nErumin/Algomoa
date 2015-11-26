@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
 
+
     compile project(':volley')
     compile 'net.htmlparser.jericho:jericho-html:3.4'
 }

@@ -84,7 +84,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public String getReferenceURL(LanguageList language, String refName) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + COLUMN_REFERENCE_URL + " FROM " + TABLE_REFERENCE +
-                " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = " + language.toString() + " AND " + COLUMN_REFERENCE_LANG_NAME + " = " + refName;
+                " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = '" + language.toString() + "' AND " + COLUMN_REFERENCE_LANG_NAME + " = '" + refName + "'";
         Log.e("Database", "RefURL / RefURL Select Query : " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -99,7 +99,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public String getProblemURL(SiteList site, String problemCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + COLUMN_PROBLEM_URL + " FROM " + TABLE_PROBLEM +
-                " WHERE " + COLUMN_PROBLEM_SITE + " = " + site.toString() + " AND " + COLUMN_PROBLEM_CODE + " = " + problemCode;
+                " WHERE " + COLUMN_PROBLEM_SITE + " = '" + site.toString() + "' AND " + COLUMN_PROBLEM_CODE + " = '" + problemCode + "'";
         Log.e("Database", "ProbURL / ProbURL Select Query : " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -151,7 +151,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public ArrayList<LanguageRefer> getAllReferences(LanguageList language) {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<LanguageRefer> refers = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_REFERENCE + " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = " + language.toString();
+        String selectQuery = "SELECT * FROM " + TABLE_REFERENCE + " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = '" + language.toString() +"'";
         Log.e("Database", "AllRefer / Ref Select Query : " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -171,7 +171,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public ArrayList<Problem> getAllProblems(SiteList site) {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Problem> problems = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_PROBLEM + " WHERE " + COLUMN_PROBLEM_SITE + " = " + site.toString();
+        String selectQuery = "SELECT * FROM " + TABLE_PROBLEM + " WHERE '" + COLUMN_PROBLEM_SITE + "' = '" + site.toString() + "'";
         Log.e("Database", "AllProb / Prob Select Query : " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);

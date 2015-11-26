@@ -16,7 +16,7 @@ public class User {
     private ArrayList<LanguageList> favoriteLanguageList;
     private ArrayList<AlgorithmSite> favoriteAlgorithmList;
 
-    public synchronized User getInstance() {
+    public synchronized static User getInstance() {
         if (user == null) {
             user = new User();
         }
