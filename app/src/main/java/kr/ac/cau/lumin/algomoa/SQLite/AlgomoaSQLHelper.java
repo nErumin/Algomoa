@@ -85,9 +85,10 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + COLUMN_REFERENCE_URL + " FROM " + TABLE_REFERENCE +
                 " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = " + language.toString() + " AND " + COLUMN_REFERENCE_LANG_NAME + " = " + refName;
+        Log.e("Database", "RefURL / RefURL Select Query : " + selectQuery);
+
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        Log.e("Database", "RefURL / RefURL Select Query : " + selectQuery);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -98,11 +99,12 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public String getProblemURL(SiteList site, String problemCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + COLUMN_PROBLEM_URL + " FROM " + TABLE_PROBLEM +
-                " WHERE " + COLUMN_PROBLEM_NAME + " = " + site.toString() + " AND " + COLUMN_PROBLEM_CODE + " = " + problemCode;
+                " WHERE " + COLUMN_PROBLEM_SITE + " = " + site.toString() + " AND " + COLUMN_PROBLEM_CODE + " = " + problemCode;
+        Log.e("Database", "ProbURL / ProbURL Select Query : " + selectQuery);
+
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
-        Log.e("Database", "ProbURL / ProbURL Select Query : " + selectQuery);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -113,12 +115,14 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public long addReference(LanguageRefer refer) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
+        Log.e("Database", "AddRef / Lang : " + refer.getLanguage().toString() + " , Name : " + refer.getReferenceName() + " , Url : " + refer.getRequestURL());
         values.put(COLUMN_REFERENCE_LANG_NAME, refer.getLanguage().toString());
         values.put(COLUMN_REFERENCE_REF_NAME, refer.getReferenceName());
         values.put(COLUMN_REFERENCE_URL, refer.getRequestURL());
 
         long rowID = db.insert(TABLE_REFERENCE, null, values);
+
+        Log.e("Database", "AddRef / Row ID : " + rowID);
         return rowID;
     }
 
@@ -126,6 +130,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        Log.e("Database", "AddProb / Number : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
         String problemCode = Integer.toString(problem.getProblemNumber());
 
         if (problem instanceof CodeforcesProblem) {
@@ -138,6 +143,8 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PROBLEM_URL, problem.getRequestURL());
 
         long rowID = db.insert(TABLE_PROBLEM, null, values);
+
+        Log.e("Database", "AddProb / Row ID : " + rowID);
         return rowID;
     }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Algomoa</string>
+    <string name="string_example">Test Example</string>
 </resources>

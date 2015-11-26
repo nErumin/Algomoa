@@ -71,7 +71,7 @@ public class AlgorithmSiteCrawlTask extends AsyncTask<Void, Void, Void> implemen
     public void executeOnNetwork(String response) {
         ArrayList<Problem> problems = (ArrayList<Problem>) this.crawlSite.crawlContentFromHtml(response);
         for (Problem problem : problems) {
-           // AlgomoaSQLHelper.getInstance(parsingContext).addProblem(problem);
+            AlgomoaSQLHelper.getInstance(parsingContext).addProblem(problem);
             Log.e("Site Crawling Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
         }
 

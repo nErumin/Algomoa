@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Language.Language;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
@@ -47,7 +48,7 @@ public class LanguageCrawlTask extends CrawlTask {
     public void executeOnNetwork(String response) {
         ArrayList<LanguageRefer> refers = (ArrayList<LanguageRefer>) this.language.crawlContentFromHtml(response);
         for (LanguageRefer ref : refers) {
-            // AlgomoaSQLHelper.getInstance(parsingContext).addProblem(problem);
+            AlgomoaSQLHelper.getInstance(parsingContext).addReference(ref);
             Log.e("Language Crawling", "Ref Name : " + ref.getReferenceName() + " , Lang : " + ref.getLanguage().toString() + " , Url : " + ref.getRequestURL());
         }
 
