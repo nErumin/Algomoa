@@ -83,7 +83,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        this.problemFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SiteSelectActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
