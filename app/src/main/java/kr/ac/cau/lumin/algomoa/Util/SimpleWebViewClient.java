@@ -9,8 +9,7 @@ import android.webkit.WebViewClient;
 public class SimpleWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        // TODO : Need to check whether should load url or not.
-        // view.loadUrl(url);
+        view.loadUrl(url);
         return true;
     }
 }

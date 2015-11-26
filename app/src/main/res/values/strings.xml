@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Algomoa</string>
     <string name="string_example">Test Example</string>
+    <string name="setting_notifier">환경설정</string>
 </resources>

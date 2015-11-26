@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/colorTeal">
+
+    <RelativeLayout
+        android:id="@+id/drawer_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_notifier"
+            android:textSize="15sp"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:paddingTop="55dp"
+            android:paddingLeft="50dp"
+            android:id="@+id/setting_notifier_text"
+            android:fontFamily="sans-serif"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:src="@drawable/setting_ic"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+</FrameLayout>
