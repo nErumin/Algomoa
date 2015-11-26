@@ -41,7 +41,9 @@
             android:src="@android:drawable/ic_menu_search"
             app:elevation="0dp"
             app:fabSize="normal"
-            app:rippleColor="#FFFFFF" />
+            app:rippleColor="#FFFFFF"
+            app:backgroundTint="#D1C4E9"
+            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/setting_fab"
@@ -56,7 +58,9 @@
             android:src="@drawable/setting_fab_ic"
             app:elevation="0dp"
             app:fabSize="normal"
-            app:rippleColor="#FFFFFF" />
+            app:rippleColor="#FFFFFF"
+            app:backgroundTint="#F8BBD0"
+            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/prob_fab"
@@ -69,7 +73,9 @@
             android:src="@drawable/prob_ic"
             app:elevation="0dp"
             app:fabSize="normal"
-            app:rippleColor="#FFFFFF" />
+            app:rippleColor="#FFFFFF"
+            app:backgroundTint="#F0F4C3"
+            />
 
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

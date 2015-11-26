@@ -3,6 +3,8 @@ package kr.ac.cau.lumin.algomoa.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +21,14 @@ import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
  */
 public class ReferenceSearchActivity extends AppCompatActivity implements View.OnClickListener{
     private Toolbar toolbar;
-    private ImageButton searchButton;
+    private AppCompatImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_view);
 
-        this.searchButton = (ImageButton) findViewById(R.id.toolbar_search_button);
+        this.searchButton = (AppCompatImageButton) findViewById(R.id.toolbar_search_button);
         this.initializeToolBar();
         this.searchButton.setOnClickListener(this);
     }
@@ -45,7 +47,6 @@ public class ReferenceSearchActivity extends AppCompatActivity implements View.O
 
         switch (id) {
             case android.R.id.home:
-                // go to previous screen when app icon in action bar is clicked
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
