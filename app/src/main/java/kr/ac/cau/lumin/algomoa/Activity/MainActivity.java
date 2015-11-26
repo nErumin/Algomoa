@@ -5,11 +5,15 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import kr.ac.cau.lumin.algomoa.Network.LanguageCrawlTask;
 import kr.ac.cau.lumin.algomoa.Network.ParsingTask;
 import kr.ac.cau.lumin.algomoa.Network.AlgorithmSiteCrawlTask;
 import kr.ac.cau.lumin.algomoa.R;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
+import kr.ac.cau.lumin.algomoa.Util.Language.Java;
+import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
+import kr.ac.cau.lumin.algomoa.Util.Language.Ruby;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
 /**
@@ -29,10 +33,15 @@ public class MainActivity extends AppCompatActivity {
             ParsingTask parsingTask = new ParsingTask(MainActivity.this, new MainActivityPostListener());
             AlgorithmSiteCrawlTask baekjoonCrawlTask = new AlgorithmSiteCrawlTask(BaekjoonOnlineJudge.getInstance(), MainActivity.this, new MainActivityPostListener());
             AlgorithmSiteCrawlTask algospotCrawlTask = new AlgorithmSiteCrawlTask(Algospot.getInstance(), MainActivity.this, new MainActivityPostListener());
+            LanguageCrawlTask rubyCrawlTask = new LanguageCrawlTask(Ruby.getInstance(), MainActivity.this, new MainActivityPostListener());
+            LanguageCrawlTask javaCrawlTask = new LanguageCrawlTask(Java.getInstance(), MainActivity.this, new MainActivityPostListener());
+
             prefs.edit().putBoolean("FirstExecute", true).apply();
             parsingTask.execute();
             baekjoonCrawlTask.execute();
             algospotCrawlTask.execute();
+            rubyCrawlTask.execute();
+            javaCrawlTask.execute();
         }
 
     }

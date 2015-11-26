@@ -14,7 +14,7 @@ import kr.ac.cau.lumin.algomoa.Network.Transmittable;
 /**
  * Created by Lumin on 2015-11-26.
  */
-public class Ruby implements Transmittable, Crawlable{
+public class Ruby extends Language {
     private static Ruby languageInst;
 
     public synchronized static Ruby getInstance() {
@@ -27,6 +27,11 @@ public class Ruby implements Transmittable, Crawlable{
 
     private Ruby() {
 
+    }
+
+    @Override
+    public String getLanguageName() {
+        return LanguageList.Ruby.toString();
     }
 
     @Override
@@ -43,8 +48,9 @@ public class Ruby implements Transmittable, Crawlable{
                 List<Element> classElems = element.getAllElements(HTMLElementName.A);
 
                 for (int j = 0; j < classElems.size(); j++) {
-                    TextExtractor extractor = classElems.get(i).getTextExtractor();
-                    rubyReferences.add(new LanguageRefer(LanguageList.Ruby, extractor.toString()));
+                    String hrefAttrValue = classElems.get(j).getAttributeValue("href");
+                    TextExtractor extractor = classElems.get(j).getTextExtractor();
+                    rubyReferences.add(new LanguageRefer(LanguageList.Ruby, extractor.toString(), hrefAttrValue));
                 }
             }
         }

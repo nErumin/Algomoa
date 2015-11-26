@@ -25,11 +25,16 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "AlgomoaDataBase";
 
     private static final String TABLE_PROBLEM = "Problem";
+    private static final String TABLE_REFERENCE = "Reference";
 
     private static final String COLUMN_PROBLEM_SITE = "site_name";
     private static final String COLUMN_PROBLEM_CODE = "prob_code";
     private static final String COLUMN_PROBLEM_NAME = "prob_name";
     private static final String COLUMN_PROBLEM_URL = "url";
+
+    private static final String COLUMN_REFERENCE_LANG_NAME = "lang_name";
+    private static final String COLUMN_REFERENCE_REF_NAME = "class_name";
+    private static final String COLUMN_REFERENCE_URL = "url";
 
     private static final String CREATE_PROBLEM_TABLE = "CREATE TABLE " + TABLE_PROBLEM + " ( " +
             COLUMN_PROBLEM_SITE + " varchar(10), " +
@@ -37,6 +42,13 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
             COLUMN_PROBLEM_NAME + " varchar(20), " +
             COLUMN_PROBLEM_URL + " varchar(100), " +
             "PRIMARY KEY (" + COLUMN_PROBLEM_SITE + ", " + COLUMN_PROBLEM_CODE + " ) " + " )";
+
+    private static final String CREATE_REFERENCE_TABLE = "CREATE TABLE " + TABLE_REFERENCE + " ( " +
+            COLUMN_REFERENCE_LANG_NAME + " varchar(10), " +
+            COLUMN_REFERENCE_REF_NAME + " varchar(50), " +
+            COLUMN_REFERENCE_URL + " varchar(100), " +
+            "PRIMARY KEY (" + COLUMN_REFERENCE_LANG_NAME + ", " + COLUMN_REFERENCE_REF_NAME + " ) " + " ) ";
+
 
     public static synchronized AlgomoaSQLHelper getInstance(Context context) {
         if (sqlHelper == null) {
@@ -54,13 +66,13 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_PROBLEM_TABLE);
-        //sqLiteDatabase.execSQL(TableEnum.CREATE_REFERENCE_TABLE.getMappingValue());
+        sqLiteDatabase.execSQL(CREATE_REFERENCE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Problem");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Reference");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PROBLEM);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_REFERENCE);
 
         // TODO : Check
         onCreate(sqLiteDatabase);
@@ -78,6 +90,8 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
 
         return cursor.getString(cursor.getColumnIndex(COLUMN_PROBLEM_URL));
     }
+
+
 
     public long addProblem(Problem problem) {
         SQLiteDatabase db = this.getWritableDatabase();

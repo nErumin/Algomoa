@@ -9,15 +9,26 @@ import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 public class LanguageRefer implements Transmittable {
     private LanguageList language;
     private String referenceName;
+    private String url;
 
-    public LanguageRefer(LanguageList language, String referenceName)
+
+    public LanguageRefer(LanguageList language, String referenceName, String url)
     {
         this.language = language;
         this.referenceName = referenceName;
+        this.url = url;
     }
 
     @Override
     public String getRequestURL() {
-        return language.getBaseSearchURL() + referenceName.replaceAll(".", "/") + ".html";
+        return language.getBaseSearchURL() + url;
+    }
+
+    public LanguageList getLanguage() {
+        return this.language;
+    }
+
+    public String getReferenceName() {
+        return this.referenceName;
     }
 }

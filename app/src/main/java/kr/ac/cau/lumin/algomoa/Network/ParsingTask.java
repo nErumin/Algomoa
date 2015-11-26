@@ -63,7 +63,7 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
         ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
 
         for (Problem problem : codeforcesProblemList) {
-            AlgomoaSQLHelper.getInstance(parsingContext).addProblem(problem);
+            //AlgomoaSQLHelper.getInstance(parsingContext).addProblem(problem);
             Log.e("Site Parsing Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
         }
 

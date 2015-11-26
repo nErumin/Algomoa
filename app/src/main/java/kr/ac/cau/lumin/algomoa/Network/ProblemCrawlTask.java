@@ -52,7 +52,6 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
 
     @Override
     protected void onPostExecute(Void aVoid) {
-
         super.onPostExecute(aVoid);
     }
 
