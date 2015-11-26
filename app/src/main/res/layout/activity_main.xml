@@ -17,7 +17,7 @@
 
     </android.support.design.widget.NavigationView>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,22 +30,48 @@
                 layout="@layout/toolbar" />
         </LinearLayout>
 
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_test"
+            android:id="@+id/search_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="15dp"
             android:clickable="true"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@android:drawable/ic_menu_search"
             app:elevation="0dp"
             app:fabSize="normal"
             app:rippleColor="#FFFFFF" />
-    </FrameLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/setting_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
+            android:layout_margin="15dp"
+
+            android:clickable="true"
+            android:src="@drawable/setting_fab_ic"
+            app:elevation="0dp"
+            app:fabSize="normal"
+            app:rippleColor="#FFFFFF" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/prob_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:src="@drawable/prob_ic"
+            app:elevation="0dp"
+            app:fabSize="normal"
+            app:rippleColor="#FFFFFF" />
+
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
 
     <!--

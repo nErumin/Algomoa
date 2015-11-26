@@ -1,7 +1,9 @@
 package kr.ac.cau.lumin.algomoa.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 
 import kr.ac.cau.lumin.algomoa.Network.LanguageCrawlTask;
@@ -32,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggleButton;
-
+    private FloatingActionButton settingFAB;
+    private FloatingActionButton referenceFAB;
+    private FloatingActionButton problemFAB;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.settingFAB = (FloatingActionButton) findViewById(R.id.setting_fab);
+        this.referenceFAB = (FloatingActionButton) findViewById(R.id.search_fab);
+        this.problemFAB = (FloatingActionButton) findViewById(R.id.prob_fab);
         this.initializeToolbar();
 
         if (!prefs.getBoolean("FirstExecute", false)) {
@@ -57,6 +66,23 @@ public class MainActivity extends AppCompatActivity {
             javaCrawlTask.execute();
             prefs.edit().putBoolean("FirstExecute", true).apply();
         }
+
+
+        this.settingFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(navigationView);
+            }
+        });
+
+        this.referenceFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ReferenceSearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -75,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.initializeDrawerLayout();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.main_drawer_view);
+        this.navigationView = (NavigationView) findViewById(R.id.main_drawer_view);
         //navigationView.setNavigationItemSelectedListener();
     }
 
