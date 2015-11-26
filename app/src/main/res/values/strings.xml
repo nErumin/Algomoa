@@ -3,4 +3,6 @@
     <string name="string_example">Test Example</string>
     <string name="setting_notifier">환경설정</string>
     <string name="class_search_notifier">Enter class name...</string>
+    <string name="fav_lang_notifier">Favorite Langauage</string>
+    <string name="fav_site_notifier">Favorite Site</string>
 </resources>
