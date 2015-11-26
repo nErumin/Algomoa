@@ -14,7 +14,7 @@
 
     <EditText
         android:id="@+id/toolbar_edit_text"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -32,7 +32,9 @@
     <ImageButton
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:background="@null"
         android:id="@+id/toolbar_search_button"
+        android:paddingRight="5dp"
         android:src="@drawable/search_ic"
         android:scaleType="fitXY"/>
 
