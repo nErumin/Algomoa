@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.AlgospotProblem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonProblem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.CodeforcesProblem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
+import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
+import kr.ac.cau.lumin.algomoa.Util.Language.LanguageRefer;
 
 /**
  * Created by Lumin on 2015-11-23.
@@ -78,12 +81,28 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    public String getReferenceURL(LanguageList language, String refName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT " + COLUMN_REFERENCE_URL + " FROM " + TABLE_REFERENCE +
+                " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = " + language.toString() + " AND " + COLUMN_REFERENCE_LANG_NAME + " = " + refName;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        Log.e("Database", "RefURL / RefURL Select Query : " + selectQuery);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        return cursor.getString(cursor.getColumnIndex(COLUMN_REFERENCE_URL));
+    }
+
     public String getProblemURL(SiteList site, String problemCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + COLUMN_PROBLEM_URL + " FROM " + TABLE_PROBLEM +
                 " WHERE " + COLUMN_PROBLEM_NAME + " = " + site.toString() + " AND " + COLUMN_PROBLEM_CODE + " = " + problemCode;
         Cursor cursor = db.rawQuery(selectQuery, null);
 
+
+        Log.e("Database", "ProbURL / ProbURL Select Query : " + selectQuery);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -91,7 +110,17 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
         return cursor.getString(cursor.getColumnIndex(COLUMN_PROBLEM_URL));
     }
 
+    public long addReference(LanguageRefer refer) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(COLUMN_REFERENCE_LANG_NAME, refer.getLanguage().toString());
+        values.put(COLUMN_REFERENCE_REF_NAME, refer.getReferenceName());
+        values.put(COLUMN_REFERENCE_URL, refer.getRequestURL());
+
+        long rowID = db.insert(TABLE_REFERENCE, null, values);
+        return rowID;
+    }
 
     public long addProblem(Problem problem) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -112,11 +141,31 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
         return rowID;
     }
 
+    public ArrayList<LanguageRefer> getAllReferences(LanguageList language) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<LanguageRefer> refers = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_REFERENCE + " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = " + language.toString();
+        Log.e("Database", "AllRefer / Ref Select Query : " + selectQuery);
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String url = cursor.getString(cursor.getColumnIndex(COLUMN_REFERENCE_URL));
+                String className = cursor.getString(cursor.getColumnIndex(COLUMN_REFERENCE_REF_NAME));
+
+                refers.add(new LanguageRefer(language, className, url));
+            } while (cursor.moveToNext());
+        }
+
+        return refers;
+    }
+
     public ArrayList<Problem> getAllProblems(SiteList site) {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Problem> problems = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_PROBLEM + " WHERE " + COLUMN_PROBLEM_SITE + " = " + site.toString();
-        Log.e("Database", "Query : " + selectQuery);
+        Log.e("Database", "AllProb / Prob Select Query : " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -141,7 +190,8 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
                     }
                     case Algospot:
                     {
-                        // TODO : Algospot
+                        int problemNumber = Integer.parseInt(problemCode);
+                        problems.add(new AlgospotProblem(problemNumber, problemName));
                         break;
                     }
                 }
