@@ -7,4 +7,13 @@
 
     <include android:id="@+id/toolbar_search" layout="@layout/toolbar_search"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="#D1C4E9"
+        android:gravity="center"
+        android:text="@string/fav_lang_notifier" />
+
 </LinearLayout>

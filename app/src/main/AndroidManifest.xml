@@ -13,15 +13,19 @@
         </activity>
 
         <activity android:name=".Activity.ReferenceSearchActivity">
+        </activity>
+
+        <activity android:name=".Activity.SiteSelectActivity">
+
+        </activity>
+
+        <activity android:name=".Activity.ReferenceViewActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".Activity.SiteSelectActivity">
-
         </activity>
     </application>
 
