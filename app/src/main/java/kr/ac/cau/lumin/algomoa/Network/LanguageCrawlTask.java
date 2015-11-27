@@ -58,7 +58,7 @@ public class LanguageCrawlTask extends CrawlTask {
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        ParsingTask redoingTask = new ParsingTask(parsingContext, this.taskListener);
+        LanguageCrawlTask redoingTask = new LanguageCrawlTask(this.language, parsingContext, this.taskListener);
         Toast.makeText(parsingContext, this.language.getLanguageName() + "의 레퍼런스 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
 
         redoingTask.execute();

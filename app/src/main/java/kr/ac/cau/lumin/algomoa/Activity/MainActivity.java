@@ -28,6 +28,7 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.APIList;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
 import kr.ac.cau.lumin.algomoa.Util.Language.Java;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
@@ -68,9 +69,20 @@ public class MainActivity extends AppCompatActivity {
         this.recyclerView.setAdapter(new LanguageSettingAdapter(getApplicationContext(), new ArrayList<>(Arrays.asList(LanguageList.class.getEnumConstants())), R.layout.setting_itemview));
 
         Log.e("Preference", prefs.getBoolean("FirstExecute", false) + "");
-        ParsingTask contestParsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), new MainActivityPostListener());
+        ParsingTask contestParsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), APIList.CodeforcesContest, new MainActivityPostListener());
+        contestParsingTask.execute();
         if (!prefs.getBoolean("FirstExecute", false)) {
-            ParsingTask parsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), new MainActivityPostListener());
+            ParsingTask parsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), APIList.CodeforcesProblem, new PostTaskListener() {
+                @Override
+                public void executeOnPostTask(Object helper) {
+                    ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject((String) helper);
+
+                    for (Problem problem : codeforcesProblemList) {
+                        AlgomoaSQLHelper.getInstance(MainActivity.this).addProblem(problem);
+                        Log.e("Site Parsing Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
+                    }
+                }
+            });
             AlgorithmSiteCrawlTask baekjoonCrawlTask = new AlgorithmSiteCrawlTask(BaekjoonOnlineJudge.getInstance(), MainActivity.this, new MainActivityPostListener());
             AlgorithmSiteCrawlTask algospotCrawlTask = new AlgorithmSiteCrawlTask(Algospot.getInstance(), MainActivity.this, new MainActivityPostListener());
             LanguageCrawlTask rubyCrawlTask = new LanguageCrawlTask(Ruby.getInstance(), MainActivity.this, new MainActivityPostListener());
@@ -142,8 +154,7 @@ public class MainActivity extends AppCompatActivity {
     private class MainActivityPostListener implements PostTaskListener {
         @Override
         public void executeOnPostTask(Object helper) {
-            Codeforces.getInstance().setUsingAPI(APIList.CodeforcesContest);
-            Codeforces.getInstance().pa
+            Codeforces.getInstance().parseContestJSONObject((String) helper);
             //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             //startActivity(intent);
         }

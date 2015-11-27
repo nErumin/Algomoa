@@ -63,7 +63,7 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        ParsingTask redoingTask = new ParsingTask(parsingContext, this.taskListener);
+        ProblemCrawlTask redoingTask = new ProblemCrawlTask(this.crawlProblem, parsingContext, this.taskListener);
         Toast.makeText(parsingContext, crawlProblem.getSiteList().toString() + "의 문제 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
 
         redoingTask.execute();

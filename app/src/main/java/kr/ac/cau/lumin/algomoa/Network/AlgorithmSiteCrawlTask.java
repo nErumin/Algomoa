@@ -80,7 +80,7 @@ public class AlgorithmSiteCrawlTask extends AsyncTask<Void, Void, Void> implemen
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        ParsingTask redoingTask = new ParsingTask(parsingContext, this.taskListener);
+        AlgorithmSiteCrawlTask redoingTask = new AlgorithmSiteCrawlTask(this.crawlSite, parsingContext, this.taskListener);
         Toast.makeText(parsingContext, crawlSite.getSiteName().toString() + "의 문제 리스트 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
 
         redoingTask.execute();

@@ -18,6 +18,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.APIList;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
@@ -33,16 +34,18 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
     private ProgressDialog contextDialog;
     private PostTaskListener taskListener;
     private Parsable parsableObject;
+    private APIList usingAPI;
 
-    public ParsingTask(Context parsingContext, Parsable parsableObject, PostTaskListener taskListener) {
+    public ParsingTask(Context parsingContext, Parsable parsableObject, APIList usingAPI, PostTaskListener taskListener) {
         this.parsingContext = parsingContext;
         this.taskListener = taskListener;
         this.parsableObject = parsableObject;
+        this.usingAPI = usingAPI;
     }
 
     @Override
     protected void onPreExecute() {
-        this.contextDialog = ProgressDialog.show(this.parsingContext, "", "Codeforces API의 응답을 기다리는 중입니다...", false, false);
+        this.contextDialog = ProgressDialog.show(this.parsingContext, "", "API의 응답을 기다리는 중입니다...", false, false);
         this.contextDialog.show();
 
         super.onPreExecute();
@@ -50,6 +53,7 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     protected Void doInBackground(Void... params) {
+        this.parsableObject.setAPIList(this.usingAPI);
         AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(parsableObject, this);
         return null;
     }
@@ -62,20 +66,13 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     public void executeOnNetwork(String response) {
-        this.taskListener.executeOnPostTask(null);
-        ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
-
-        for (Problem problem : codeforcesProblemList) {
-            AlgomoaSQLHelper.getInstance(parsingContext).addProblem(problem);
-            Log.e("Site Parsing Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
-        }
-
+        this.taskListener.executeOnPostTask(response);
         this.contextDialog.dismiss();
     }
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        ParsingTask redoingTask = new ParsingTask(parsingContext, this.parsableObject, this.taskListener);
+        ParsingTask redoingTask = new ParsingTask(parsingContext, this.parsableObject, this.usingAPI, this.taskListener);
         Toast.makeText(parsingContext, "Codeforces API 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
 
         redoingTask.execute();
