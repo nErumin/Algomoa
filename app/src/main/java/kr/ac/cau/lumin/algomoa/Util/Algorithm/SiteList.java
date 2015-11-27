@@ -1,5 +1,8 @@
 package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Lumin on 2015-11-21.
  */
@@ -16,5 +19,9 @@ public enum SiteList {
 
     public String getBaseSearchURL() {
         return this.baseSearchURL;
+    }
+
+    public static ArrayList<SiteList> fetchAllSiteList() {
+        return new ArrayList<>(Arrays.asList(SiteList.class.getEnumConstants()));
     }
 }

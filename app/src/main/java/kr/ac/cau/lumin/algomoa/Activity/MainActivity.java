@@ -30,7 +30,9 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
+import kr.ac.cau.lumin.algomoa.Util.AlgorithmSettingAdapter;
 import kr.ac.cau.lumin.algomoa.Util.Language.Java;
+import kr.ac.cau.lumin.algomoa.Util.Language.Language;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 import kr.ac.cau.lumin.algomoa.Util.Language.Ruby;
 import kr.ac.cau.lumin.algomoa.Util.LanguageSettingAdapter;
@@ -48,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton referenceFAB;
     private FloatingActionButton problemFAB;
     private NavigationView navigationView;
-    private RecyclerView recyclerView;
+    private RecyclerView favorLanguageRecyclerView;
+    private RecyclerView favorSiteRecyclerView;
+    private RecyclerView contestRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +62,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.initializeToolbar();
         View headerView = navigationView.inflateHeaderView(R.layout.drawer_header);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        this.recyclerView = (RecyclerView) headerView.findViewById(R.id.fav_lang_recycler);
-        this.recyclerView.setLayoutManager(layoutManager);
+        this.favorLanguageRecyclerView = (RecyclerView) headerView.findViewById(R.id.fav_lang_recycler);
+        this.favorSiteRecyclerView = (RecyclerView) headerView.findViewById(R.id.fav_site_recycler);
 
+        this.favorLanguageRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        this.favorLanguageRecyclerView.setHasFixedSize(true);
+        this.favorLanguageRecyclerView.setAdapter(new LanguageSettingAdapter(MainActivity.this, LanguageList.fetchAllLanguageList(), R.layout.setting_itemview));
+
+        this.favorSiteRecyclerView.setHasFixedSize(true);
+        this.favorSiteRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        this.favorSiteRecyclerView.setAdapter(new AlgorithmSettingAdapter(MainActivity.this, SiteList.fetchAllSiteList(), R.layout.setting_itemview));
+        
+
+        this.contestRecyclerView = (RecyclerView) findViewById(R.id.contest_recycler);
         this.settingFAB = (FloatingActionButton) findViewById(R.id.setting_fab);
         this.referenceFAB = (FloatingActionButton) findViewById(R.id.search_fab);
         this.problemFAB = (FloatingActionButton) findViewById(R.id.prob_fab);
-        this.recyclerView.setHasFixedSize(true);
-        this.recyclerView.setAdapter(new LanguageSettingAdapter(getApplicationContext(), new ArrayList<>(Arrays.asList(LanguageList.class.getEnumConstants())), R.layout.setting_itemview));
+
+        this.contestRecyclerView.setHasFixedSize(true);
+        this.contestRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        this.contestRecyclerView.setAdapter(new LanguageSettingAdapter(MainActivity.this, LanguageList.fetchAllLanguageList(), R.layout.setting_itemview));
 
         Log.e("Preference", prefs.getBoolean("FirstExecute", false) + "");
         ParsingTask contestParsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), APIList.CodeforcesContest, new MainActivityPostListener());

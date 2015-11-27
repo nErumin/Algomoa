@@ -14,7 +14,7 @@ import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 public class User {
     private static User user;
     private ArrayList<LanguageList> favoriteLanguageList;
-    private ArrayList<AlgorithmSite> favoriteAlgorithmList;
+    private ArrayList<SiteList> favoriteAlgorithmList;
 
     public synchronized static User getInstance() {
         if (user == null) {
@@ -30,16 +30,16 @@ public class User {
         this.favoriteLanguageList = new ArrayList<>();
     }
 
-    public void addNewFavoriteSite(AlgorithmSite newSite) {
+    public void addNewFavoriteSite(SiteList newSite) {
         this.favoriteAlgorithmList.add(newSite);
     }
 
     public void deleteFavoriteSite(SiteList deleteSiteList) throws InvalidObjectException {
         for (int i = 0; i < this.favoriteAlgorithmList.size(); i++) {
-            AlgorithmSite favoriteSite = this.favoriteAlgorithmList.get(i);
-            if (favoriteSite.getSiteName().toString().equals(deleteSiteList.toString())) {
+            SiteList favoriteSite = this.favoriteAlgorithmList.get(i);
+            if (favoriteSite.toString().equals(deleteSiteList.toString())) {
                 this.favoriteAlgorithmList.remove(i);
-                break;
+                return;
             }
         }
 
@@ -55,14 +55,14 @@ public class User {
             LanguageList favoriteLanguage = this.favoriteLanguageList.get(i);
             if (favoriteLanguage.toString().equals(deleteLanguage.toString())) {
                 this.favoriteLanguageList.remove(i);
-                break;
+                return;
             }
         }
 
         throw new InvalidObjectException("Cannot find that language in the list.");
     }
 
-    public void changeFavoriteSite(Collection<AlgorithmSite> siteCollection) {
+    public void changeFavoriteSite(Collection<SiteList> siteCollection) {
         this.favoriteAlgorithmList = new ArrayList<>(siteCollection);
     }
 
@@ -70,7 +70,7 @@ public class User {
         this.favoriteLanguageList = new ArrayList<>(languageCollection);
     }
 
-    public ArrayList<AlgorithmSite> copyFavoriteAlgorithmSite() {
+    public ArrayList<SiteList> copyFavoriteAlgorithmSite() {
         return new ArrayList<>(this.favoriteAlgorithmList);
     }
 

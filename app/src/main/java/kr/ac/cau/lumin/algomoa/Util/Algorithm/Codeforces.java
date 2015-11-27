@@ -39,7 +39,7 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
      */
     @Override
     public String getRequestURL() {
-        Log.e("CodeforcesRequestURL", SiteList.Codeforces.getBaseSearchURL() + this.usingAPI);
+        Log.e("CodeforcesRequestURL", SiteList.Codeforces.getBaseSearchURL() + this.usingAPI.getBaseSearchURL());
         return SiteList.Codeforces.getBaseSearchURL() + this.usingAPI.getBaseSearchURL();
     }
 
@@ -60,7 +60,7 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
                 String problemIndex = problemJSONObject.getString("index");
                 String problemName = problemJSONObject.getString("name");
                 codeforceProblemList.add(new CodeforcesProblem(problemNumber, problemIndex, problemName));
-                Log.e("CodeForces Problem Parse", problemNumber + " " + problemIndex + " " + problemName);
+                Log.e("CodeForces Problem", problemNumber + " " + problemIndex + " " + problemName);
             }
         } catch (JSONException e) {
             Log.e("Exception", e.getMessage());
@@ -85,7 +85,7 @@ public class Codeforces extends AlgorithmSite implements Transmittable, Parsable
                 String contestName = contestJSONObject.getString("name");
                 Date contestStartTime = new Date(contestJSONObject.getLong("startTimeSeconds") * 1000L);
                 codeforceContestList.add(new Contest(contestID, contestName, contestStartTime));
-                Log.e("CodeForces Contest Parse", contestID + " " + contestName + " " + contestStartTime.toString());
+                Log.e("CodeForces Contest", contestID + " " + contestName + " " + contestStartTime.toString());
             }
         } catch (JSONException e) {
             Log.e("Exception", e.getMessage());

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,6 +14,32 @@
         android:layout_centerHorizontal="true"
         android:background="#D1C4E9"
         android:gravity="center"
+        android:layout_below="@id/toolbar_search"
         android:text="@string/fav_lang_notifier" />
 
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fav_lang_search_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView"
+        android:scrollbars="vertical">
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="#D1C4E9"
+        android:layout_below="@id/fav_lang_search_recycler"
+        android:text="@string/favn_lang_notifier" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/favn_lang_search_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView2"
+        android:scrollbars="vertical">
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

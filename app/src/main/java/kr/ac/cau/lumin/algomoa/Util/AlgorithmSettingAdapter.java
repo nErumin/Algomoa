@@ -15,40 +15,41 @@ import java.util.List;
 
 import kr.ac.cau.lumin.algomoa.R;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 
 /**
  * Created by Lumin on 2015-11-27.
  */
-public class LanguageSettingAdapter extends RecyclerView.Adapter<LanguageSettingAdapter.ViewHolder> {
+public class AlgorithmSettingAdapter extends RecyclerView.Adapter<AlgorithmSettingAdapter.ViewHolder> {
     private Context context;
-    private List<LanguageList> languageLists;
+    private List<SiteList> siteList;
     private int viewItemLayout;
 
-    public LanguageSettingAdapter(Context context, List<LanguageList> languageLists, int viewItemLayout) {
+    public AlgorithmSettingAdapter(Context context, List<SiteList> siteList, int viewItemLayout) {
         this.context = context;
-        this.languageLists = languageLists;
+        this.siteList = siteList;
         this.viewItemLayout = viewItemLayout;
     }
 
     @Override
     public int getItemCount() {
-        return this.languageLists.size();
+        return this.siteList.size();
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        final LanguageList language = this.languageLists.get(i);
-        viewHolder.textView.setText(language.toString());
+        final SiteList site = this.siteList.get(i);
+        viewHolder.textView.setText(site.toString());
 
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    User.getInstance().addNewFavoriteLanguage(language);
+                    User.getInstance().addNewFavoriteSite(site);
                 } else {
                     try {
-                        User.getInstance().deleteFavoriteLanguage(language);
+                        User.getInstance().deleteFavoriteSite(site);
                     } catch (InvalidObjectException e) {
                         Log.e("CheckBoxListener", "Cannot find User language." + e.getMessage());
                     }

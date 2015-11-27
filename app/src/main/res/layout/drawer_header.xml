@@ -55,14 +55,14 @@
             android:gravity="center"
             android:text="@string/fav_lang_notifier" />
 
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/fav_lang_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/textView"
+            android:layout_below="@id/textView"
             android:scrollbars="vertical">
         </android.support.v7.widget.RecyclerView>
-
 
         <TextView
             android:layout_width="match_parent"
@@ -74,5 +74,13 @@
             android:layout_alignBottom="@id/fav_lang_recycler"
             />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fav_site_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textView"
+            android:scrollbars="vertical">
+        </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
+
 </RelativeLayout>
