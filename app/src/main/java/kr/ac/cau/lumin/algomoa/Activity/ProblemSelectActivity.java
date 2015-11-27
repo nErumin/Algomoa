@@ -17,10 +17,12 @@ public class ProblemSelectActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String siteName = getIntent().getExtras().getString("SiteName");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_view);
 
         this.initializeToolBar();
+        this.initializeRecyclerView();
     }
 
     @Override
@@ -50,5 +52,9 @@ public class ProblemSelectActivity extends AppCompatActivity {
             this.setSupportActionBar(this.toolbar);
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void initializeRecyclerView() {
+        // TODO : This
     }
 }

@@ -80,7 +80,7 @@ public class ReferenceAdapter extends RecyclerView.Adapter<ReferenceAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.refer_itemview, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.refer_itemview, viewGroup, false);
         return new ViewHolder(view);
     }
 

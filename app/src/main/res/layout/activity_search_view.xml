@@ -2,11 +2,17 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include android:id="@+id/toolbar_search" layout="@layout/toolbar_search"/>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relative_layout"
+        android:layout_below="@id/toolbar_search">
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -14,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:background="#D1C4E9"
         android:gravity="center"
-        android:layout_below="@id/toolbar_search"
+        android:layout_alignParentTop="true"
         android:text="@string/fav_lang_notifier" />
 
     <android.support.v7.widget.RecyclerView
@@ -30,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:background="#D1C4E9"
         android:layout_below="@id/fav_lang_search_recycler"
         android:text="@string/favn_lang_notifier" />
@@ -41,5 +48,5 @@
         android:layout_below="@id/textView2"
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
-
+    </RelativeLayout>
 </RelativeLayout>

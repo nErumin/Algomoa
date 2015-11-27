@@ -10,13 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".Activity.MainActivity" >
-        </activity>
-
-        <activity android:name=".Activity.IntroActivity">
-
-        </activity>
-
-        <activity android:name=".Activity.ProblemViewActivity">
 
 
             <intent-filter>
@@ -24,6 +17,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".Activity.IntroActivity">
+
+        </activity>
+
+        <activity android:name=".Activity.ProblemViewActivity">
         </activity>
 
         <activity android:name=".Activity.ProblemSelectActivity">
