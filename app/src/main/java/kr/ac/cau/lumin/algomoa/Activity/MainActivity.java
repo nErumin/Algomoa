@@ -24,8 +24,10 @@ import kr.ac.cau.lumin.algomoa.Network.ParsingTask;
 import kr.ac.cau.lumin.algomoa.Network.AlgorithmSiteCrawlTask;
 import kr.ac.cau.lumin.algomoa.R;
 import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.APIList;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
 import kr.ac.cau.lumin.algomoa.Util.Language.Java;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
@@ -66,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
         this.recyclerView.setAdapter(new LanguageSettingAdapter(getApplicationContext(), new ArrayList<>(Arrays.asList(LanguageList.class.getEnumConstants())), R.layout.setting_itemview));
 
         Log.e("Preference", prefs.getBoolean("FirstExecute", false) + "");
+        ParsingTask contestParsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), new MainActivityPostListener());
         if (!prefs.getBoolean("FirstExecute", false)) {
-            ParsingTask parsingTask = new ParsingTask(MainActivity.this, new MainActivityPostListener());
+            ParsingTask parsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), new MainActivityPostListener());
             AlgorithmSiteCrawlTask baekjoonCrawlTask = new AlgorithmSiteCrawlTask(BaekjoonOnlineJudge.getInstance(), MainActivity.this, new MainActivityPostListener());
             AlgorithmSiteCrawlTask algospotCrawlTask = new AlgorithmSiteCrawlTask(Algospot.getInstance(), MainActivity.this, new MainActivityPostListener());
             LanguageCrawlTask rubyCrawlTask = new LanguageCrawlTask(Ruby.getInstance(), MainActivity.this, new MainActivityPostListener());
@@ -138,8 +141,10 @@ public class MainActivity extends AppCompatActivity {
 
     private class MainActivityPostListener implements PostTaskListener {
         @Override
-        public void executeOnPostTask() {
-            //Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
+        public void executeOnPostTask(Object helper) {
+            Codeforces.getInstance().setUsingAPI(APIList.CodeforcesContest);
+            Codeforces.getInstance().pa
+            //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             //startActivity(intent);
         }
     }

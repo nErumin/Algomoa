@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Lumin on 2015-11-24.
  */
-public interface Parsable<T> {
-    public ArrayList<T> parseJSONObject(String content);
+public interface Parsable extends Transmittable {
+    public ArrayList parseJSONObject(String content);
     // TODO : Html Parse
 }

@@ -32,10 +32,12 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
     private Context parsingContext;
     private ProgressDialog contextDialog;
     private PostTaskListener taskListener;
+    private Parsable parsableObject;
 
-    public ParsingTask(Context parsingContext, PostTaskListener taskListener) {
+    public ParsingTask(Context parsingContext, Parsable parsableObject, PostTaskListener taskListener) {
         this.parsingContext = parsingContext;
         this.taskListener = taskListener;
+        this.parsableObject = parsableObject;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     protected Void doInBackground(Void... params) {
-        AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(Codeforces.getInstance(), this);
+        AlgomoaNetworkQueue.getInstance(parsingContext).sendHttpGetRequest(parsableObject, this);
         return null;
     }
 
@@ -60,6 +62,7 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     public void executeOnNetwork(String response) {
+        this.taskListener.executeOnPostTask(null);
         ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject(response);
 
         for (Problem problem : codeforcesProblemList) {
@@ -72,7 +75,7 @@ public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkL
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        ParsingTask redoingTask = new ParsingTask(parsingContext, this.taskListener);
+        ParsingTask redoingTask = new ParsingTask(parsingContext, this.parsableObject, this.taskListener);
         Toast.makeText(parsingContext, "Codeforces API 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
 
         redoingTask.execute();

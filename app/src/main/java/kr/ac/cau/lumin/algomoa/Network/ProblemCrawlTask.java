@@ -57,8 +57,7 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
 
     @Override
     public void executeOnNetwork(String response) {
-        crawlProblem.crawlContentFromHtml(response);
-        this.taskListener.executeOnPostTask();
+        this.taskListener.executeOnPostTask(crawlProblem.crawlContentFromHtml(response));
         this.contextDialog.dismiss();
     }
 

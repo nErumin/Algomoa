@@ -52,7 +52,7 @@ public class LanguageCrawlTask extends CrawlTask {
             Log.e("Language Crawling", "Ref Name : " + ref.getReferenceName() + " , Lang : " + ref.getLanguage().toString() + " , Url : " + ref.getRequestURL());
         }
 
-        this.taskListener.executeOnPostTask();
+        //this.taskListener.executeOnPostTask();
         this.contextDialog.dismiss();
     }
 

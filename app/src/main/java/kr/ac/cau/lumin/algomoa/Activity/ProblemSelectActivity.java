@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import kr.ac.cau.lumin.algomoa.R;
@@ -39,6 +40,7 @@ public class ProblemSelectActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
     private void initializeToolBar() {
