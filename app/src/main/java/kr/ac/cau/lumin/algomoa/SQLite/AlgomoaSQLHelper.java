@@ -84,7 +84,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public String getReferenceURL(LanguageList language, String refName) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT " + COLUMN_REFERENCE_URL + " FROM " + TABLE_REFERENCE +
-                " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = '" + language.toString() + "' AND " + COLUMN_REFERENCE_LANG_NAME + " = '" + refName + "'";
+                " WHERE " + COLUMN_REFERENCE_LANG_NAME + " = '" + language.toString() + "' AND " + COLUMN_REFERENCE_REF_NAME + " = '" + refName + "'";
         Log.e("Database", "RefURL / RefURL Select Query : " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);

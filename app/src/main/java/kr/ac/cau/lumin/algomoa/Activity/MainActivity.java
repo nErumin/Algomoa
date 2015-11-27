@@ -28,9 +28,11 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.APIList;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Contest;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
 import kr.ac.cau.lumin.algomoa.Util.AlgorithmSettingAdapter;
+import kr.ac.cau.lumin.algomoa.Util.ContestSettingAdapter;
 import kr.ac.cau.lumin.algomoa.Util.Language.Java;
 import kr.ac.cau.lumin.algomoa.Util.Language.Language;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         this.favorSiteRecyclerView.setHasFixedSize(true);
         this.favorSiteRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         this.favorSiteRecyclerView.setAdapter(new AlgorithmSettingAdapter(MainActivity.this, SiteList.fetchAllSiteList(), R.layout.setting_itemview));
-        
+
 
         this.contestRecyclerView = (RecyclerView) findViewById(R.id.contest_recycler);
         this.settingFAB = (FloatingActionButton) findViewById(R.id.setting_fab);
@@ -81,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.contestRecyclerView.setHasFixedSize(true);
         this.contestRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        this.contestRecyclerView.setAdapter(new LanguageSettingAdapter(MainActivity.this, LanguageList.fetchAllLanguageList(), R.layout.setting_itemview));
 
         Log.e("Preference", prefs.getBoolean("FirstExecute", false) + "");
         ParsingTask contestParsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), APIList.CodeforcesContest, new MainActivityPostListener());
@@ -169,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
     private class MainActivityPostListener implements PostTaskListener {
         @Override
         public void executeOnPostTask(Object helper) {
-            Codeforces.getInstance().parseContestJSONObject((String) helper);
+            ArrayList<Contest> contests = Codeforces.getInstance().parseContestJSONObject((String) helper);
+            contestRecyclerView.setAdapter(new ContestSettingAdapter(MainActivity.this, contests, R.layout.contest_itemview));
             //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             //startActivity(intent);
         }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/relative_layout"
+        android:layout_height="60dp">
+
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/contest_image"
+            android:adjustViewBounds="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/codeforce_ic"
+            android:scaleType="fitXY"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/contest_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:text="@string/string_example"
+            android:layout_toLeftOf="@id/contest_image"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/contest_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="25dp"
+        android:gravity="center_vertical"
+        android:text="@string/string_example"
+        android:textSize="13dp"
+        android:background="#BBDEFB"
+        android:layout_below="@id/relative_layout"/>
+</RelativeLayout>

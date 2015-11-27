@@ -1,6 +1,7 @@
 package kr.ac.cau.lumin.algomoa.Util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -12,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import java.io.InvalidObjectException;
+import java.util.ArrayList;
 import java.util.List;
 
+import kr.ac.cau.lumin.algomoa.Activity.ReferenceViewActivity;
 import kr.ac.cau.lumin.algomoa.R;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageRefer;
@@ -25,11 +28,24 @@ public class ReferenceAdapter extends RecyclerView.Adapter<ReferenceAdapter.View
     private Context context;
     private List<LanguageRefer> refers;
     private int viewItemLayout;
+    private PostTaskListener postTaskListener;
 
-    public ReferenceAdapter(Context context, List<LanguageRefer> refers, int viewItemLayout) {
+    public ReferenceAdapter(Context context, List<LanguageRefer> refers, PostTaskListener postTaskListener, int viewItemLayout) {
         this.context = context;
         this.refers = refers;
         this.viewItemLayout = viewItemLayout;
+        this.postTaskListener = postTaskListener;
+    }
+
+    public void clearData() {
+        int size = this.refers.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                this.refers.remove(0);
+            }
+
+            this.notifyItemRangeRemoved(0, size);
+        }
     }
 
     @Override
@@ -41,7 +57,25 @@ public class ReferenceAdapter extends RecyclerView.Adapter<ReferenceAdapter.View
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final LanguageRefer refer = this.refers.get(i);
         viewHolder.textView.setText(refer.getLanguage().toString() + " - " + refer.getReferenceName());
-        //viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.java_logo_ic));
+        viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.codeforce_ic));
+
+        viewHolder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ReferenceViewActivity.class);
+                intent.putExtra("Language", refer.getLanguage().toString());
+                intent.putExtra("Reference", refer.getReferenceName());
+                intent.putExtra("URL", refer.getRequestURL());
+                context.startActivity(intent);
+            }
+        });
+
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ReferenceViewActivity.class);
+            }
+        });
     }
 
     @Override
