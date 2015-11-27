@@ -12,9 +12,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+
 import kr.ac.cau.lumin.algomoa.R;
 import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
+import kr.ac.cau.lumin.algomoa.Util.Language.LanguageRefer;
 
 /**
  * Created by Lumin on 2015-11-26.
@@ -28,14 +31,19 @@ public class ReferenceSearchActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_view);
 
-        this.searchButton = (AppCompatImageButton) findViewById(R.id.toolbar_search_button);
         this.initializeToolBar();
-        this.searchButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        AlgomoaSQLHelper.getInstance(this).getAllReferences(LanguageList.Ruby);
+        ArrayList<ArrayList<LanguageRefer>> searchRefers = new ArrayList<>();
+        searchRefers.add(AlgomoaSQLHelper.getInstance(this).getAllReferences(LanguageList.Ruby));
+        searchRefers.add(AlgomoaSQLHelper.getInstance(this).getAllReferences(LanguageList.Java));
+
+        for (ArrayList<LanguageRefer> referList : searchRefers) {
+            
+        }
+
     }
 
     @Override
@@ -65,5 +73,8 @@ public class ReferenceSearchActivity extends AppCompatActivity implements View.O
             this.getSupportActionBar().setDisplayUseLogoEnabled(false);
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        this.searchButton = (AppCompatImageButton) findViewById(R.id.toolbar_search_button);
+        this.searchButton.setOnClickListener(this);
     }
 }
