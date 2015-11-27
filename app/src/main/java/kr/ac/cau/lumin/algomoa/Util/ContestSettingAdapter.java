@@ -41,7 +41,7 @@ public class ContestSettingAdapter extends RecyclerView.Adapter<ContestSettingAd
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final Contest contest = this.contests.get(i);
         viewHolder.nameView.setText(contest.getName());
-        viewHolder.timeView.setText(contest.getStartTime().toString());
+        viewHolder.timeView.setText(contest.getStartTimeInString());
         viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.codeforce_ic));
     }
 

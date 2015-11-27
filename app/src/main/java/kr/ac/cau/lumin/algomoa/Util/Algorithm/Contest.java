@@ -1,6 +1,8 @@
 package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Lumin on 2015-11-27.
@@ -26,5 +28,20 @@ public class Contest {
 
     public Date getStartTime() {
         return this.startTime;
+    }
+
+    public String getStartTimeInString() {
+        StringBuilder timeBuilder = new StringBuilder();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.startTime);
+        timeBuilder.append(calendar.get(Calendar.YEAR) + "년 ");
+        timeBuilder.append(calendar.get(Calendar.MONTH) + "월 ");
+        timeBuilder.append(calendar.get(Calendar.DATE) + "일 ");
+        timeBuilder.append(calendar.get(Calendar.HOUR) + "시 ");
+        timeBuilder.append(calendar.get(Calendar.MINUTE) + "분 ");
+        timeBuilder.append(calendar.get(Calendar.SECOND) + "초에 시작합니다.");
+        timeBuilder.append(" (EST) ");
+
+        return timeBuilder.toString();
     }
 }
