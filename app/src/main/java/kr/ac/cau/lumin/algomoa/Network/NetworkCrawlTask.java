@@ -11,12 +11,12 @@ import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 /**
  * Created by CAUCSE on 2015-11-26.
  */
-public abstract class CrawlTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
+public abstract class NetworkCrawlTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
     protected Context parsingContext;
     protected ProgressDialog contextDialog;
     protected PostTaskListener taskListener;
 
-    protected CrawlTask(Context parsingContext, PostTaskListener taskListener) {
+    protected NetworkCrawlTask(Context parsingContext, PostTaskListener taskListener) {
         this.parsingContext = parsingContext;
         this.taskListener = taskListener;
     }

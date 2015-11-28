@@ -2,33 +2,30 @@ package kr.ac.cau.lumin.algomoa.Network;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
-import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Language.Language;
-import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageRefer;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
 /**
  * Created by CAUCSE on 2015-11-26.
  */
-public class LanguageCrawlTask extends CrawlTask {
+public class LanguageNetworkCrawlTask extends NetworkCrawlTask {
     private Language language;
 
-    public LanguageCrawlTask(Language language, Context parsingContext, PostTaskListener taskListener) {
+    public LanguageNetworkCrawlTask(Language language, Context parsingContext, PostTaskListener taskListener) {
         super(parsingContext, taskListener);
         this.language = language;
     }
 
     @Override
     protected void onPreExecute() {
-        this.contextDialog = ProgressDialog.show(this.parsingContext, "", this.language.getLanguageName() + "의 레퍼런스 정보를 불러오는 중입니다. 화면이 멈추거나 까맣게 될 수 있으나 진행 중이니 기다려주세요...", false, false);
+        this.contextDialog = ProgressDialog.show(this.parsingContext, "", this.language.getLanguageName() + "의 레퍼런스 정보를 불러오는 중입니다...", false, false);
         this.contextDialog.show();
         super.onPreExecute();
     }
@@ -46,19 +43,20 @@ public class LanguageCrawlTask extends CrawlTask {
 
     @Override
     public void executeOnNetwork(String response) {
-        ArrayList<LanguageRefer> refers = (ArrayList<LanguageRefer>) this.language.crawlContentFromHtml(response);
-        for (LanguageRefer ref : refers) {
-            AlgomoaSQLHelper.getInstance(parsingContext).addReference(ref);
-            Log.e("Language Crawling", "Ref Name : " + ref.getReferenceName() + " , Lang : " + ref.getLanguage().toString() + " , Url : " + ref.getRequestURL());
-        }
+        StringCrawlingTask referCrawlingTask = new StringCrawlingTask(parsingContext, this.language, new CrawlListener() {
+            @Override
+            public void executeOnCrawling(Object helper) {
+                taskListener.executeOnPostTask(null);
+                contextDialog.dismiss();
+            }
+        });
 
-        this.taskListener.executeOnPostTask(null);
-        this.contextDialog.dismiss();
+        referCrawlingTask.execute(response);
     }
 
     @Override
     public void executeFailOnNetwork(String errorResponse) {
-        LanguageCrawlTask redoingTask = new LanguageCrawlTask(this.language, parsingContext, this.taskListener);
+        LanguageNetworkCrawlTask redoingTask = new LanguageNetworkCrawlTask(this.language, parsingContext, this.taskListener);
         Toast.makeText(parsingContext, this.language.getLanguageName() + "의 레퍼런스 로드에 실패했습니다. 재시도합니다.", Toast.LENGTH_SHORT).show();
 
         redoingTask.execute();

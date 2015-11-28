@@ -1,47 +1,28 @@
 package kr.ac.cau.lumin.algomoa.Activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
-import kr.ac.cau.lumin.algomoa.Network.LanguageCrawlTask;
 import kr.ac.cau.lumin.algomoa.Network.ParsingTask;
-import kr.ac.cau.lumin.algomoa.Network.AlgorithmSiteCrawlTask;
 import kr.ac.cau.lumin.algomoa.R;
-import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.APIList;
-import kr.ac.cau.lumin.algomoa.Util.Algorithm.Algospot;
-import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Contest;
-import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Adapter.ContestSettingAdapter;
-import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
-import kr.ac.cau.lumin.algomoa.Util.Language.Java;
-import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
-import kr.ac.cau.lumin.algomoa.Util.Language.Ruby;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
-import kr.ac.cau.lumin.algomoa.Util.User;
 
 /**
  * Created by Lumin on 2015-11-21.
