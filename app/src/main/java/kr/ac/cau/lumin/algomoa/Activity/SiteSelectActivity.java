@@ -72,7 +72,7 @@ public class SiteSelectActivity extends AppCompatActivity {
 
 
         for (SiteList site : SiteList.fetchAllSiteList()) {
-            if (userSiteList.indexOf(site) == -1) {
+            if (userSiteList.indexOf(site) != -1) {
                 favSiteList.add(site);
             } else {
                 unFavSiteList.add(site);

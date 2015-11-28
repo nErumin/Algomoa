@@ -1,0 +1,15 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/drawer_java" android:title="Java"/>
+        <item android:id="@+id/drawer_ruby" android:title="Ruby"/>
+        <item android:id="@+id/drawer_codeforce" android:title="Codeforces"/>
+        <item android:id="@+id/drawer_algospot" android:title="Algospot"/>
+        <item android:id="@+id/drawer_baekjoon" android:title="BaekjoonOnlineJudge"/>
+
+    </group>
+
+</menu>

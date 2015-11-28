@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -46,7 +47,7 @@ import kr.ac.cau.lumin.algomoa.Util.User;
  * Created by Lumin on 2015-11-21.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggleButton;
@@ -57,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView favorLanguageRecyclerView;
     private RecyclerView favorSiteRecyclerView;
     private RecyclerView contestRecyclerView;
-    private AppCompatCheckBox[] langCheckBoxs;
-    private AppCompatCheckBox[] siteCheckBoxs;
-    private AppCompatTextView[] langTextViews;
-    private AppCompatTextView[] siteTextViews;
 
 
     @Override
@@ -69,36 +66,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.initializeToolbar();
-        View headerView = navigationView.inflateHeaderView(R.layout.drawer_header);
-        this.langCheckBoxs = new AppCompatCheckBox[2];
-        this.siteCheckBoxs = new AppCompatCheckBox[3];
-        this.langTextViews = new AppCompatTextView[2];
-        this.siteTextViews = new AppCompatTextView[3];
-
-        this.langCheckBoxs[0] = (AppCompatCheckBox) headerView.findViewById(R.id.ruby_checkbox);
-        this.langCheckBoxs[1] = (AppCompatCheckBox) headerView.findViewById(R.id.java_checkbox);
-        this.langTextViews[0] = (AppCompatTextView) headerView.findViewById(R.id.ruby_textview);
-        this.langTextViews[1] = (AppCompatTextView) headerView.findViewById(R.id.java_textview);
-
-        this.siteCheckBoxs[0] = (AppCompatCheckBox) headerView.findViewById(R.id.codeforce_checkbox);
-        this.siteCheckBoxs[1] = (AppCompatCheckBox) headerView.findViewById(R.id.baekjoon_checkbox);
-        this.siteCheckBoxs[2] = (AppCompatCheckBox) headerView.findViewById(R.id.algospot_checkbox);
-        this.siteTextViews[0] = (AppCompatTextView) headerView.findViewById(R.id.codeforce_textview);
-        this.siteTextViews[1] = (AppCompatTextView) headerView.findViewById(R.id.baekjoon_textview);
-        this.siteTextViews[2] = (AppCompatTextView) headerView.findViewById(R.id.algospot_textview);
-
-        this.initializeCheckboxListener(langCheckBoxs, langTextViews, siteCheckBoxs, siteTextViews);
-        /*this.favorLanguageRecyclerView = (RecyclerView) headerView.findViewById(R.id.fav_lang_recycler);
-        this.favorSiteRecyclerView = (RecyclerView) headerView.findViewById(R.id.fav_site_recycler);
-
-        this.favorLanguageRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        this.favorLanguageRecyclerView.setHasFixedSize(true);
-        this.favorLanguageRecyclerView.setAdapter(new LanguageSettingAdapter(MainActivity.this, LanguageList.fetchAllLanguageList(), R.layout.setting_itemview));
-
-        this.favorSiteRecyclerView.setHasFixedSize(true);
-        this.favorSiteRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        this.favorSiteRecyclerView.setAdapter(new AlgorithmSettingAdapter(MainActivity.this, SiteList.fetchAllSiteList(), R.layout.setting_itemview));*/
-
 
         this.contestRecyclerView = (RecyclerView) findViewById(R.id.contest_recycler);
         this.settingFAB = (FloatingActionButton) findViewById(R.id.setting_fab);
@@ -115,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
         this.settingFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.openDrawer(navigationView);
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                startActivity(intent);
+                //drawerLayout.openDrawer(navigationView);
             }
         });
 
@@ -137,6 +106,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+
+            case R.id.drawer_ruby:
+                Toast.makeText(this, "설정이 눌렸어요~!", Toast.LENGTH_LONG).show();
+                break;
+
+        }
+
+        drawerLayout.closeDrawers();
+        item.setChecked(true);
+
+        return true;
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         this.drawerToggleButton.syncState();
@@ -150,26 +137,9 @@ public class MainActivity extends AppCompatActivity {
             this.setSupportActionBar(toolbar);
         }
 
-        this.initializeDrawerLayout();
-        this.navigationView = (NavigationView) findViewById(R.id.main_drawer_view);
-        this.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                int id = item.getItemId();
-
-                switch (id) {
-
-                    case R.id.ruby_checkbox:
-                        Log.e("DDD", "DDDDDDDDDDDDDDDDDDDDDDDDD");
-                        break;
-                }
-
-                drawerLayout.closeDrawers();
-                item.setChecked(true);
-
-                return true;
-            }
-        });
+       // this.navigationView = (NavigationView) findViewById(R.id.main_drawer_view);
+        //this.initializeDrawerLayout();
+        //this.navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void initializeDrawerLayout() {
@@ -182,45 +152,6 @@ public class MainActivity extends AppCompatActivity {
         this.drawerToggleButton = new ActionBarDrawerToggle(this, this.drawerLayout, this.toolbar, R.string.app_name, R.string.app_name);
         this.drawerToggleButton.setDrawerIndicatorEnabled(true);
     }
-
-    private void initializeCheckboxListener(AppCompatCheckBox[] langCheckBoxs, final AppCompatTextView[] langTextViews, AppCompatCheckBox[] siteCheckBoxs, final AppCompatTextView[] siteTextViews) {
-        for (int i = 0; i < langCheckBoxs.length; i++) {
-            final int index = i;
-            langCheckBoxs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (compoundButton.isChecked()) {
-                        User.getInstance().addNewFavoriteLanguage(LanguageList.valueOf(langTextViews[index].getText().toString()));
-                    } else {
-                        try {
-                            User.getInstance().deleteFavoriteLanguage(LanguageList.valueOf(langTextViews[index].getText().toString()));
-                        } catch (InvalidObjectException e) {
-                            Log.e("CheckBoxListener", "Cannot find User language." + e.getMessage());
-                        }
-                    }
-                }
-            });
-        }
-
-        for (int i = 0; i < siteCheckBoxs.length; i++) {
-            final int index = i;
-            siteCheckBoxs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (compoundButton.isChecked()) {
-                        User.getInstance().addNewFavoriteSite(SiteList.valueOf(siteTextViews[index].getText().toString()));
-                    } else {
-                        try {
-                            User.getInstance().deleteFavoriteSite(SiteList.valueOf(siteTextViews[index].getText().toString()));
-                        } catch (InvalidObjectException e) {
-                            Log.e("CheckBoxListener", "Cannot find User site." + e.getMessage());
-                        }
-                    }
-                }
-            });
-        }
-    }
-
 
     private class MainActivityPostListener implements PostTaskListener {
         @Override

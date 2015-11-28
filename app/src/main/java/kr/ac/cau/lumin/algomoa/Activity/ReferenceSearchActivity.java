@@ -63,10 +63,10 @@ public class ReferenceSearchActivity extends AppCompatActivity implements View.O
             for (int i = 0; i < referList.size(); i++) {
                 LanguageRefer languageRefer = referList.get(i);
 
-                if (favoriteLanguageList.indexOf(languageRefer.getLanguage()) == -1 &&
+                if (favoriteLanguageList.indexOf(languageRefer.getLanguage()) != -1 &&
                         languageRefer.getReferenceName().startsWith(this.searchText.getText().toString())) {
                     favLangRefer.add(referList.get(i));
-                } else if (favoriteLanguageList.indexOf(languageRefer.getLanguage()) != -1 &&
+                } else if (favoriteLanguageList.indexOf(languageRefer.getLanguage()) == -1 &&
                         languageRefer.getReferenceName().startsWith(this.searchText.getText().toString())) {
                     unFavLangRefer.add(referList.get(i));
                 }
