@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton settingFAB;
     private FloatingActionButton referenceFAB;
     private FloatingActionButton problemFAB;
-    private NavigationView navigationView;
-    private RecyclerView favorLanguageRecyclerView;
-    private RecyclerView favorSiteRecyclerView;
     private RecyclerView contestRecyclerView;
 
 
@@ -126,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        this.drawerToggleButton.syncState();
     }
 
     private void initializeToolbar() {

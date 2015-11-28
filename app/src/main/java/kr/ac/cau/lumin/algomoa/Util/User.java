@@ -1,5 +1,9 @@
 package kr.ac.cau.lumin.algomoa.Util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,5 +80,22 @@ public class User {
 
     public ArrayList<LanguageList> copyFavoriteLanguage() {
         return new ArrayList<>(this.favoriteLanguageList);
+    }
+
+    public void setUserFavoriteInfomation(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        for (LanguageList language : LanguageList.fetchAllLanguageList()) {
+            boolean result = prefs.getBoolean(language.toString(), false);
+            if (result) {
+                User.getInstance().addNewFavoriteLanguage(language);
+            }
+        }
+
+        for (SiteList site : SiteList.fetchAllSiteList()) {
+            boolean result = prefs.getBoolean(site.toString(), false);
+            if (result) {
+                User.getInstance().addNewFavoriteSite(site);
+            }
+        }
     }
 }

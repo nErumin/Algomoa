@@ -75,6 +75,7 @@ public class AlgorithmSiteCrawlTask extends AsyncTask<Void, Void, Void> implemen
             Log.e("Site Crawling Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
         }
 
+        this.taskListener.executeOnPostTask(null);
         this.contextDialog.dismiss();
     }
 

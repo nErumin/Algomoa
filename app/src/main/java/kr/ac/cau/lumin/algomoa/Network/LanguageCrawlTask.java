@@ -28,7 +28,7 @@ public class LanguageCrawlTask extends CrawlTask {
 
     @Override
     protected void onPreExecute() {
-        this.contextDialog = ProgressDialog.show(this.parsingContext, "", this.language.getLanguageName() + "의 레퍼런스 정보를 불러오는 중입니다...", false, false);
+        this.contextDialog = ProgressDialog.show(this.parsingContext, "", this.language.getLanguageName() + "의 레퍼런스 정보를 불러오는 중입니다. 화면이 멈추거나 까맣게 될 수 있으나 진행 중이니 기다려주세요...", false, false);
         this.contextDialog.show();
         super.onPreExecute();
     }
@@ -52,7 +52,7 @@ public class LanguageCrawlTask extends CrawlTask {
             Log.e("Language Crawling", "Ref Name : " + ref.getReferenceName() + " , Lang : " + ref.getLanguage().toString() + " , Url : " + ref.getRequestURL());
         }
 
-        //this.taskListener.executeOnPostTask();
+        this.taskListener.executeOnPostTask(null);
         this.contextDialog.dismiss();
     }
 

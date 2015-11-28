@@ -24,6 +24,7 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Language.Java;
 import kr.ac.cau.lumin.algomoa.Util.Language.Ruby;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
+import kr.ac.cau.lumin.algomoa.Util.User;
 
 /**
  * Created by Lumin on 2015-11-24.
@@ -45,24 +46,37 @@ public class IntroActivity extends AppCompatActivity {
                     ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject((String) helper);
 
                     for (Problem problem : codeforcesProblemList) {
-                        AlgomoaSQLHelper.getInstance(IntroActivity.this).addProblem(problem);
+                        AlgomoaSQLHelper.getInstance(getApplicationContext()).addProblem(problem);
                         Log.e("Site Parsing Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
                     }
+
+                    AlgorithmSiteCrawlTask baekjoonCrawlTask = new AlgorithmSiteCrawlTask(BaekjoonOnlineJudge.getInstance(), IntroActivity.this, new PostTaskListener() {
+                        @Override
+                        public void executeOnPostTask(Object helper) {
+                            AlgorithmSiteCrawlTask algospotCrawlTask = new AlgorithmSiteCrawlTask(Algospot.getInstance(), IntroActivity.this, new PostTaskListener() {
+                                @Override
+                                public void executeOnPostTask(Object helper) {
+                                    LanguageCrawlTask rubyCrawlTask = new LanguageCrawlTask(Ruby.getInstance(), IntroActivity.this, new PostTaskListener() {
+                                        @Override
+                                        public void executeOnPostTask(Object helper) {
+                                            LanguageCrawlTask javaCrawlTask = new LanguageCrawlTask(Java.getInstance(), IntroActivity.this, new MainActivityPostListener());
+                                            javaCrawlTask.execute();
+                                        }
+                                    });
+                                    rubyCrawlTask.execute();
+                                }
+                            });
+                            algospotCrawlTask.execute();
+                        }
+                    });
+                    baekjoonCrawlTask.execute();
                 }
             });
-            AlgorithmSiteCrawlTask baekjoonCrawlTask = new AlgorithmSiteCrawlTask(BaekjoonOnlineJudge.getInstance(), IntroActivity.this, new MainActivityPostListener());
-            AlgorithmSiteCrawlTask algospotCrawlTask = new AlgorithmSiteCrawlTask(Algospot.getInstance(), IntroActivity.this, new MainActivityPostListener());
-            LanguageCrawlTask rubyCrawlTask = new LanguageCrawlTask(Ruby.getInstance(), IntroActivity.this, new MainActivityPostListener());
-            LanguageCrawlTask javaCrawlTask = new LanguageCrawlTask(Java.getInstance(), IntroActivity.this, new MainActivityPostListener());
-
             parsingTask.execute();
-            baekjoonCrawlTask.execute();
-            algospotCrawlTask.execute();
-            rubyCrawlTask.execute();
-            javaCrawlTask.execute();
             prefs.edit().putBoolean("FirstExecute", true).apply();
         } else {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            User.getInstance().setUserFavoriteInfomation(getApplicationContext());
             startActivity(intent);
         }
     }
@@ -71,8 +85,9 @@ public class IntroActivity extends AppCompatActivity {
     private class MainActivityPostListener implements PostTaskListener {
         @Override
         public void executeOnPostTask(Object helper) {
-            //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            User.getInstance().setUserFavoriteInfomation(getApplicationContext());
+            startActivity(intent);
         }
     }
 }

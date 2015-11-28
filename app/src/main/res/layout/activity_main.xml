@@ -9,16 +9,6 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/main_drawer_view"
-        android:layout_width="270dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/menu_setting">
-
-    </android.support.design.widget.NavigationView>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

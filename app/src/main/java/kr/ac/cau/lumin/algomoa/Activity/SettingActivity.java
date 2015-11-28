@@ -2,6 +2,7 @@ package kr.ac.cau.lumin.algomoa.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -62,8 +63,6 @@ public class SettingActivity extends AppCompatActivity {
         final ArrayList<LanguageList> favorLanguageList = User.getInstance().copyFavoriteLanguage();
         final ArrayList<SiteList> favorSiteList = User.getInstance().copyFavoriteAlgorithmSite();
 
-
-
         for (int i = 0; i < langTextViews.length; i++) {
             final int index = i;
             langCheckBoxs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -74,6 +73,7 @@ public class SettingActivity extends AppCompatActivity {
                             int i = favorLanguageList.indexOf(LanguageList.valueOf(langTextViews[index].getText().toString()));
                             if (i >= 0) {
                                 User.getInstance().deleteFavoriteLanguage(favorLanguageList.get(i));
+                                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().remove(langTextViews[index].getText().toString().toString()).apply();
                             }
                         } catch (InvalidObjectException e) {
 
@@ -83,6 +83,7 @@ public class SettingActivity extends AppCompatActivity {
 
                         if (i < 0) {
                             User.getInstance().addNewFavoriteLanguage(LanguageList.valueOf(langTextViews[index].getText().toString()));
+                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean(langTextViews[index].getText().toString().toString(), true).apply();
                         }
                     }
                 }
@@ -103,6 +104,7 @@ public class SettingActivity extends AppCompatActivity {
                             int i = favorSiteList.indexOf(SiteList.valueOf(siteTextViews[index].getText().toString()));
                             if (i >= 0) {
                                 User.getInstance().deleteFavoriteSite(favorSiteList.get(i));
+                                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().remove(siteTextViews[index].getText().toString()).apply();
                             }
                         } catch (InvalidObjectException e) {
 
@@ -112,6 +114,7 @@ public class SettingActivity extends AppCompatActivity {
 
                         if (i < 0) {
                             User.getInstance().addNewFavoriteSite(SiteList.valueOf(siteTextViews[index].getText().toString()));
+                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean(siteTextViews[index].getText().toString(), true).apply();
                         }
                     }
                 }
