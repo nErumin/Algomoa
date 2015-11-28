@@ -28,7 +28,7 @@ public class ProblemSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         String siteName = getIntent().getExtras().getString("SiteName");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_view);
+        setContentView(R.layout.activity_simple_select_view);
         ArrayList<Problem> problemList = AlgomoaSQLHelper.getInstance(this).getAllProblems(SiteList.valueOf(siteName));
         this.problemRecyclerView = (RecyclerView) findViewById(R.id.prob_list_recycler);
         this.problemRecyclerView.setHasFixedSize(true);

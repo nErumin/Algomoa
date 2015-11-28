@@ -171,7 +171,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
     public ArrayList<Problem> getAllProblems(SiteList site) {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Problem> problems = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_PROBLEM + " WHERE '" + COLUMN_PROBLEM_SITE + "' = '" + site.toString() + "'";
+        String selectQuery = "SELECT * FROM " + TABLE_PROBLEM + " WHERE " + COLUMN_PROBLEM_SITE + " = '" + site.toString() + "'";
         Log.e("Database", "AllProb / Prob Select Query : " + selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -184,9 +184,14 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
                 switch (site) {
                     case Codeforces:
                     {
-                        int problemNumber = Integer.parseInt(problemCode.substring(0, problemCode.length() - 1));
-                        String problemIndex = problemCode.substring(problemCode.length() - 1, problemCode.length());
-                        problems.add(new CodeforcesProblem(problemNumber, problemIndex, problemName));
+                        for (int i = 0; i < problemName.length(); i++) {
+                            if (problemCode.charAt(i) > '9') {
+                                int problemNumber = Integer.parseInt(problemCode.substring(0, i));
+                                String problemIndex = problemCode.substring(i, problemCode.length());
+                                problems.add(new CodeforcesProblem(problemNumber, problemIndex, problemName));
+                                break;
+                            }
+                        }
                         break;
                     }
                     case BaekjoonOnlineJudge:

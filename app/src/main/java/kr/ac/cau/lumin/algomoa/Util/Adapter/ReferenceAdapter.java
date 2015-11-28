@@ -2,6 +2,7 @@ package kr.ac.cau.lumin.algomoa.Util.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import kr.ac.cau.lumin.algomoa.Activity.ReferenceViewActivity;
 import kr.ac.cau.lumin.algomoa.R;
+import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageRefer;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
@@ -51,8 +53,16 @@ public class ReferenceAdapter extends RecyclerView.Adapter<ReferenceAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final LanguageRefer refer = this.refers.get(i);
+        Drawable imageDrawable;
         viewHolder.textView.setText(refer.getLanguage().toString() + " - " + refer.getReferenceName());
-        viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.codeforce_ic));
+
+        if (refer.getLanguage().toString().equals("Java")) {
+            imageDrawable = context.getResources().getDrawable(R.drawable.java_logo_ic);
+        } else {
+            imageDrawable = context.getResources().getDrawable(R.drawable.ruby_ic);
+        }
+
+        viewHolder.imageView.setImageDrawable(imageDrawable);
 
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +79,10 @@ public class ReferenceAdapter extends RecyclerView.Adapter<ReferenceAdapter.View
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ReferenceViewActivity.class);
+                intent.putExtra("Language", refer.getLanguage().toString());
+                intent.putExtra("Reference", refer.getReferenceName());
+                intent.putExtra("URL", refer.getRequestURL());
+                context.startActivity(intent);
             }
         });
     }

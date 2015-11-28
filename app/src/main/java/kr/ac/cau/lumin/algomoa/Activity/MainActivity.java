@@ -9,12 +9,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
 import kr.ac.cau.lumin.algomoa.Network.LanguageCrawlTask;
@@ -28,14 +32,13 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.BaekjoonOnlineJudge;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Contest;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
-import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
-import kr.ac.cau.lumin.algomoa.Util.Adapter.AlgorithmSettingAdapter;
 import kr.ac.cau.lumin.algomoa.Util.Adapter.ContestSettingAdapter;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
 import kr.ac.cau.lumin.algomoa.Util.Language.Java;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 import kr.ac.cau.lumin.algomoa.Util.Language.Ruby;
-import kr.ac.cau.lumin.algomoa.Util.Adapter.LanguageSettingAdapter;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
+import kr.ac.cau.lumin.algomoa.Util.User;
 
 /**
  * Created by Lumin on 2015-11-21.
@@ -52,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView favorLanguageRecyclerView;
     private RecyclerView favorSiteRecyclerView;
     private RecyclerView contestRecyclerView;
+    private AppCompatCheckBox[] langCheckBoxs;
+    private AppCompatCheckBox[] siteCheckBoxs;
+    private AppCompatTextView[] langTextViews;
+    private AppCompatTextView[] siteTextViews;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +69,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.initializeToolbar();
         View headerView = navigationView.inflateHeaderView(R.layout.drawer_header);
-        this.favorLanguageRecyclerView = (RecyclerView) headerView.findViewById(R.id.fav_lang_recycler);
+        this.langCheckBoxs = new AppCompatCheckBox[2];
+        this.siteCheckBoxs = new AppCompatCheckBox[3];
+        this.langTextViews = new AppCompatTextView[2];
+        this.siteTextViews = new AppCompatTextView[3];
+
+        this.langCheckBoxs[0] = (AppCompatCheckBox) headerView.findViewById(R.id.ruby_checkbox);
+        this.langCheckBoxs[1] = (AppCompatCheckBox) headerView.findViewById(R.id.java_checkbox);
+        this.langTextViews[0] = (AppCompatTextView) headerView.findViewById(R.id.ruby_textview);
+        this.langTextViews[1] = (AppCompatTextView) headerView.findViewById(R.id.java_textview);
+
+        this.siteCheckBoxs[0] = (AppCompatCheckBox) headerView.findViewById(R.id.codeforce_checkbox);
+        this.siteCheckBoxs[1] = (AppCompatCheckBox) headerView.findViewById(R.id.baekjoon_checkbox);
+        this.siteCheckBoxs[2] = (AppCompatCheckBox) headerView.findViewById(R.id.algospot_checkbox);
+        this.siteTextViews[0] = (AppCompatTextView) headerView.findViewById(R.id.codeforce_textview);
+        this.siteTextViews[1] = (AppCompatTextView) headerView.findViewById(R.id.baekjoon_textview);
+        this.siteTextViews[2] = (AppCompatTextView) headerView.findViewById(R.id.algospot_textview);
+
+        this.initializeCheckboxListener(langCheckBoxs, langTextViews, siteCheckBoxs, siteTextViews);
+        /*this.favorLanguageRecyclerView = (RecyclerView) headerView.findViewById(R.id.fav_lang_recycler);
         this.favorSiteRecyclerView = (RecyclerView) headerView.findViewById(R.id.fav_site_recycler);
 
         this.favorLanguageRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -70,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.favorSiteRecyclerView.setHasFixedSize(true);
         this.favorSiteRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        this.favorSiteRecyclerView.setAdapter(new AlgorithmSettingAdapter(MainActivity.this, SiteList.fetchAllSiteList(), R.layout.setting_itemview));
+        this.favorSiteRecyclerView.setAdapter(new AlgorithmSettingAdapter(MainActivity.this, SiteList.fetchAllSiteList(), R.layout.setting_itemview));*/
 
 
         this.contestRecyclerView = (RecyclerView) findViewById(R.id.contest_recycler);
@@ -162,6 +188,44 @@ public class MainActivity extends AppCompatActivity {
     private void initializeToggleButton() {
         this.drawerToggleButton = new ActionBarDrawerToggle(this, this.drawerLayout, this.toolbar, R.string.app_name, R.string.app_name);
         this.drawerToggleButton.setDrawerIndicatorEnabled(true);
+    }
+
+    private void initializeCheckboxListener(AppCompatCheckBox[] langCheckBoxs, final AppCompatTextView[] langTextViews, AppCompatCheckBox[] siteCheckBoxs, final AppCompatTextView[] siteTextViews) {
+        for (int i = 0; i < langCheckBoxs.length; i++) {
+            final int index = i;
+            langCheckBoxs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (compoundButton.isChecked()) {
+                        User.getInstance().addNewFavoriteLanguage(LanguageList.valueOf(langTextViews[index].getText().toString()));
+                    } else {
+                        try {
+                            User.getInstance().deleteFavoriteLanguage(LanguageList.valueOf(langTextViews[index].getText().toString()));
+                        } catch (InvalidObjectException e) {
+                            Log.e("CheckBoxListener", "Cannot find User language." + e.getMessage());
+                        }
+                    }
+                }
+            });
+        }
+
+        for (int i = 0; i < siteCheckBoxs.length; i++) {
+            final int index = i;
+            siteCheckBoxs[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (compoundButton.isChecked()) {
+                        User.getInstance().addNewFavoriteSite(SiteList.valueOf(siteTextViews[index].getText().toString()));
+                    } else {
+                        try {
+                            User.getInstance().deleteFavoriteSite(SiteList.valueOf(siteTextViews[index].getText().toString()));
+                        } catch (InvalidObjectException e) {
+                            Log.e("CheckBoxListener", "Cannot find User site." + e.getMessage());
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private class MainActivityPostListener implements PostTaskListener {

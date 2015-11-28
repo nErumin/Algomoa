@@ -24,19 +24,18 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="@string/setting_notifier"
-                android:textColor="#FFF"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <ImageView
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:paddingLeft="20dp"
                 android:paddingTop="20dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/setting_ic" />
+                android:src="@drawable/setting_ic"/>
 
         </RelativeLayout>
     </FrameLayout>
@@ -56,31 +55,113 @@
             android:text="@string/fav_lang_notifier" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fav_lang_recycler"
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/ruby_checkbox"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:layout_below="@id/textView"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/ruby_textview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/textView"
-            android:scrollbars="vertical">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Ruby"
+            android:layout_toLeftOf="@id/ruby_checkbox"
+            android:layout_below="@id/textView"/>
+
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/java_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Java"
+            android:layout_toLeftOf="@id/ruby_checkbox"
+            android:layout_below="@id/ruby_textview"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/java_checkbox"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:layout_alignBottom="@id/java_textview"
+            android:layout_below="@id/ruby_checkbox"/>
+
+
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:background="#D1C4E9"
             android:gravity="center"
             android:text="@string/fav_site_notifier"
-            android:layout_alignBottom="@id/fav_lang_recycler"
+            android:layout_below="@id/java_textview"
             />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fav_site_recycler"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/codeforce_textview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/textView"
-            android:scrollbars="vertical">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Codeforces"
+            android:layout_toLeftOf="@id/ruby_checkbox"
+            android:layout_below="@id/textView2"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/codeforce_checkbox"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:layout_alignBottom="@id/codeforce_textview"
+            android:layout_below="@id/textView2"/>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/baekjoon_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="BaekjoonOnlineJudge"
+            android:layout_toLeftOf="@id/ruby_checkbox"
+            android:layout_below="@id/codeforce_textview"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/baekjoon_checkbox"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:layout_alignBottom="@id/baekjoon_textview"
+            android:layout_below="@id/codeforce_textview"/>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/algospot_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Algospot"
+            android:layout_toLeftOf="@id/ruby_checkbox"
+            android:layout_below="@id/baekjoon_textview"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/algospot_checkbox"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:layout_alignBottom="@id/algospot_textview"
+            android:layout_below="@id/baekjoon_checkbox"/>
+
+
     </RelativeLayout>
 
 </RelativeLayout>
