@@ -28,12 +28,7 @@ public class BaekjoonProblem extends Problem {
     public Object crawlContentFromHtml(String htmlContent) {
         Source htmlSource = new Source(htmlContent);
         List<Element> elementList = htmlSource.getAllElements(HTMLElementName.DIV);
-        Hashtable<String, ArrayList<String>> infoTable = new Hashtable<>();
-        infoTable.put("problem_description", new ArrayList<String>());
-        infoTable.put("problem_input", new ArrayList<String>());
-        infoTable.put("problem_output", new ArrayList<String>());
-        infoTable.put("sample_input_1", new ArrayList<String>());
-        infoTable.put("sample_output_1", new ArrayList<String>());
+        Hashtable<String, String> infoTable = new Hashtable<>();
 
         for (int i = 0; i < elementList.size(); i++) {
             Element element = elementList.get(i);
@@ -41,9 +36,7 @@ public class BaekjoonProblem extends Problem {
             TextExtractor extractor = element.getTextExtractor();
             if (attrValue != null) {
                 attrValue = attrValue.replaceAll("-", "_");
-                if (infoTable.containsKey(attrValue)) {
-                    infoTable.get(attrValue).add(extractor.toString());
-                }
+                infoTable.put(attrValue, extractor.toString());
             }
         }
 

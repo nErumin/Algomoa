@@ -53,16 +53,9 @@ public class ReferenceAdapter extends RecyclerView.Adapter<ReferenceAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final LanguageRefer refer = this.refers.get(i);
-        Drawable imageDrawable;
+
         viewHolder.textView.setText(refer.getLanguage().toString() + " - " + refer.getReferenceName());
-
-        if (refer.getLanguage().toString().equals("Java")) {
-            imageDrawable = context.getResources().getDrawable(R.drawable.java_logo_ic);
-        } else {
-            imageDrawable = context.getResources().getDrawable(R.drawable.ruby_ic);
-        }
-
-        viewHolder.imageView.setImageDrawable(imageDrawable);
+        viewHolder.imageView.setImageDrawable(refer.getLanguage().fetchDrawable(context));
 
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override

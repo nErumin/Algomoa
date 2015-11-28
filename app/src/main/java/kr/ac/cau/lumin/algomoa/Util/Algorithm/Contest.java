@@ -3,6 +3,7 @@ package kr.ac.cau.lumin.algomoa.Util.Algorithm;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Created by Lumin on 2015-11-27.
@@ -32,10 +33,10 @@ public class Contest {
 
     public String getStartTimeInString() {
         StringBuilder timeBuilder = new StringBuilder();
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTime(this.startTime);
         timeBuilder.append(calendar.get(Calendar.YEAR) + "년 ");
-        timeBuilder.append(calendar.get(Calendar.MONTH) + "월 ");
+        timeBuilder.append((calendar.get(Calendar.MONTH) + 1) + "월 ");
         timeBuilder.append(calendar.get(Calendar.DATE) + "일 ");
         timeBuilder.append(calendar.get(Calendar.HOUR) + "시 ");
         timeBuilder.append(calendar.get(Calendar.MINUTE) + "분에 시작합니다.");

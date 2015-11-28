@@ -13,13 +13,16 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
+        android:layout_below="@id/toolbar"
         android:background="#D1C4E9"
-        android:text="@string/string_example" />
+        android:text="사이트 목록" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/site_recycler"
+        android:id="@+id/fav_site_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/textView2"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:layout_above="@id/textView"/>
+
 </LinearLayout>

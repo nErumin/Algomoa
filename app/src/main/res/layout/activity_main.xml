@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.NavigationView
         android:id="@+id/main_drawer_view"
@@ -18,7 +17,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/colorTeal">
+            android:background="@color/colorTeal"/>
 
             <RelativeLayout
                 android:id="@+id/drawer_holder"
@@ -48,7 +47,6 @@
                     android:src="@drawable/setting_ic"/>
 
             </RelativeLayout>
-        </FrameLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

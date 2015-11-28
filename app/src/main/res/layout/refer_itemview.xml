@@ -8,11 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
-
-
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="65dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:id="@+id/refer_image"
             android:adjustViewBounds="true"
             android:layout_alignParentRight="true"
@@ -20,14 +18,15 @@
             android:scaleType="fitXY"
             />
 
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/refer_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:padding="10dp"
             android:gravity="center_vertical"
-            android:text="@string/string_example"
-            android:layout_toLeftOf="@id/refer_image"/>
+            android:layout_toLeftOf="@id/refer_image"
+            android:text="@string/string_example"/>
 
     </RelativeLayout>
 </LinearLayout>

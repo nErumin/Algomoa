@@ -15,8 +15,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
@@ -63,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -107,33 +108,8 @@ public class MainActivity extends AppCompatActivity {
         this.contestRecyclerView.setHasFixedSize(true);
         this.contestRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-        Log.e("Preference", prefs.getBoolean("FirstExecute", false) + "");
         ParsingTask contestParsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), APIList.CodeforcesContest, new MainActivityPostListener());
         contestParsingTask.execute();
-        if (!prefs.getBoolean("FirstExecute", false)) {
-            ParsingTask parsingTask = new ParsingTask(MainActivity.this, Codeforces.getInstance(), APIList.CodeforcesProblem, new PostTaskListener() {
-                @Override
-                public void executeOnPostTask(Object helper) {
-                    ArrayList<Problem> codeforcesProblemList = Codeforces.getInstance().parseJSONObject((String) helper);
-
-                    for (Problem problem : codeforcesProblemList) {
-                        AlgomoaSQLHelper.getInstance(MainActivity.this).addProblem(problem);
-                        Log.e("Site Parsing Problems", "ID : " + problem.getProblemNumber() + " , Name : " + problem.getProblemName() + " , Url : " + problem.getRequestURL());
-                    }
-                }
-            });
-            AlgorithmSiteCrawlTask baekjoonCrawlTask = new AlgorithmSiteCrawlTask(BaekjoonOnlineJudge.getInstance(), MainActivity.this, new MainActivityPostListener());
-            AlgorithmSiteCrawlTask algospotCrawlTask = new AlgorithmSiteCrawlTask(Algospot.getInstance(), MainActivity.this, new MainActivityPostListener());
-            LanguageCrawlTask rubyCrawlTask = new LanguageCrawlTask(Ruby.getInstance(), MainActivity.this, new MainActivityPostListener());
-            LanguageCrawlTask javaCrawlTask = new LanguageCrawlTask(Java.getInstance(), MainActivity.this, new MainActivityPostListener());
-
-            parsingTask.execute();
-            baekjoonCrawlTask.execute();
-            algospotCrawlTask.execute();
-            rubyCrawlTask.execute();
-            javaCrawlTask.execute();
-            prefs.edit().putBoolean("FirstExecute", true).apply();
-        }
 
 
         this.settingFAB.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +152,24 @@ public class MainActivity extends AppCompatActivity {
 
         this.initializeDrawerLayout();
         this.navigationView = (NavigationView) findViewById(R.id.main_drawer_view);
-        //navigationView.setNavigationItemSelectedListener();
+        this.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id) {
+
+                    case R.id.ruby_checkbox:
+                        Log.e("DDD", "DDDDDDDDDDDDDDDDDDDDDDDDD");
+                        break;
+                }
+
+                drawerLayout.closeDrawers();
+                item.setChecked(true);
+
+                return true;
+            }
+        });
     }
 
     private void initializeDrawerLayout() {
@@ -227,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
 
     private class MainActivityPostListener implements PostTaskListener {
         @Override

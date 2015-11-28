@@ -54,7 +54,7 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final SiteList site = this.sites.get(i);
         viewHolder.textView.setText(site.toString());
-        viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.codeforce_ic));
+        viewHolder.imageView.setImageDrawable(site.fetchDrawable(context));
 
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override

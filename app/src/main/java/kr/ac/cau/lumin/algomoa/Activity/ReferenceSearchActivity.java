@@ -27,12 +27,9 @@ import kr.ac.cau.lumin.algomoa.Util.User;
 public class ReferenceSearchActivity extends AppCompatActivity implements View.OnClickListener{
     private Toolbar toolbar;
     private AppCompatImageButton searchButton;
-    private RecyclerView referFavRecyclerView;
-    private RecyclerView referFavnRecyclerView;
-    private List<LanguageRefer> favRefers;
-    private List<LanguageRefer> favnRefers;
+    private RecyclerView referRecyclerView;
+    private List<LanguageRefer> refers;
     private ReferenceAdapter favReferenceAdapter;
-    private ReferenceAdapter favnReferenceAdapter;
     private EditText searchText;
 
     @Override
@@ -40,43 +37,51 @@ public class ReferenceSearchActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_view);
 
-        this.favRefers = new ArrayList<>();
-        this.favnRefers = new ArrayList<>();
+        this.refers = new ArrayList<>();
         this.initializeToolBar();
 
         this.searchText = (EditText) findViewById(R.id.toolbar_edit_text);
-        this.favReferenceAdapter = new ReferenceAdapter(ReferenceSearchActivity.this, favRefers, null, R.layout.refer_itemview);
-        //this.favnReferenceAdapter = new ReferenceAdapter(ReferenceSearchActivity.this, favnRefers, null, R.layout.refer_itemview);
-        this.referFavRecyclerView = (RecyclerView) findViewById(R.id.fav_lang_search_recycler);
-        this.referFavnRecyclerView = (RecyclerView) findViewById(R.id.favn_lang_search_recycler);
-        this.referFavRecyclerView.setHasFixedSize(true);
-        this.referFavnRecyclerView.setHasFixedSize(true);
-        this.referFavRecyclerView.setLayoutManager(new LinearLayoutManager(ReferenceSearchActivity.this));
-        this.referFavnRecyclerView.setLayoutManager(new LinearLayoutManager(ReferenceSearchActivity.this));
-        this.referFavRecyclerView.setAdapter(favReferenceAdapter);
+        this.favReferenceAdapter = new ReferenceAdapter(ReferenceSearchActivity.this, refers, null, R.layout.refer_itemview);
+        this.referRecyclerView = (RecyclerView) findViewById(R.id.fav_lang_search_recycler);
+        this.referRecyclerView.setHasFixedSize(true);
+        this.referRecyclerView.setLayoutManager(new LinearLayoutManager(ReferenceSearchActivity.this));
+        this.referRecyclerView.setAdapter(favReferenceAdapter);
     }
 
     @Override
     public void onClick(View view) {
         ArrayList<ArrayList<LanguageRefer>> searchRefers = new ArrayList<>();
         ArrayList<LanguageList> favoriteLanguageList = User.getInstance().copyFavoriteLanguage();
+        ArrayList<LanguageRefer> favLangRefer = new ArrayList<>();
+        ArrayList<LanguageRefer> unFavLangRefer = new ArrayList<>();
         searchRefers.add(AlgomoaSQLHelper.getInstance(this).getAllReferences(LanguageList.Ruby));
         searchRefers.add(AlgomoaSQLHelper.getInstance(this).getAllReferences(LanguageList.Java));
+
+        this.refers.clear();
 
         for (ArrayList<LanguageRefer> referList : searchRefers) {
             for (int i = 0; i < referList.size(); i++) {
                 LanguageRefer languageRefer = referList.get(i);
 
-                if (favoriteLanguageList.indexOf(languageRefer.getLanguage().toString()) == -1 &&
+                if (favoriteLanguageList.indexOf(languageRefer.getLanguage()) == -1 &&
                         languageRefer.getReferenceName().startsWith(this.searchText.getText().toString())) {
-                    this.favRefers.add(referList.get(i));
+                    favLangRefer.add(referList.get(i));
+                } else if (favoriteLanguageList.indexOf(languageRefer.getLanguage()) != -1 &&
+                        languageRefer.getReferenceName().startsWith(this.searchText.getText().toString())) {
+                    unFavLangRefer.add(referList.get(i));
                 }
             }
-
-            this.favReferenceAdapter.notifyDataSetChanged();
-//            this.favnReferenceAdapter.notifyDataSetChanged();
         }
 
+        for (LanguageRefer refer : favLangRefer) {
+            refers.add(refer);
+        }
+
+        for (LanguageRefer refer : unFavLangRefer) {
+            refers.add(refer);
+        }
+
+        this.favReferenceAdapter.notifyDataSetChanged();
     }
 
     @Override

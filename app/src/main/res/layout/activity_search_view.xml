@@ -21,31 +21,13 @@
         android:background="#D1C4E9"
         android:gravity="center"
         android:layout_alignParentTop="true"
-        android:text="@string/fav_lang_notifier" />
+        android:text="검색 결과" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fav_lang_search_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/textView"
-        android:scrollbars="vertical">
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:background="#D1C4E9"
-        android:layout_below="@id/fav_lang_search_recycler"
-        android:text="@string/favn_lang_notifier" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/favn_lang_search_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/textView2"
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
     </RelativeLayout>

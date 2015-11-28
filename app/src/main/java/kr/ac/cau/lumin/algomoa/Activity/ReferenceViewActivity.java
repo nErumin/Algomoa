@@ -38,7 +38,7 @@ public class ReferenceViewActivity extends AppCompatActivity {
         this.nameTextView = (TextView) findViewById(R.id.toolbar_text);
         this.imageView = (AppCompatImageView) findViewById(R.id.toolbar_image);
         this.nameTextView.setText(languageName + " - " + className);
-        this.imageView.setImageDrawable(this.getResources().getDrawable(R.drawable.codeforce_ic));
+        this.imageView.setImageDrawable(LanguageList.valueOf(languageName).fetchDrawable(getApplicationContext()));
 
         this.initializeToolBar();
         targetURL = AlgomoaSQLHelper.getInstance(this).getReferenceURL(LanguageList.valueOf(languageName), className);

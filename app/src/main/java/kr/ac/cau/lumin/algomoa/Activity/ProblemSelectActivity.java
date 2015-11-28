@@ -3,10 +3,14 @@ package kr.ac.cau.lumin.algomoa.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,8 @@ import kr.ac.cau.lumin.algomoa.Util.Adapter.SimpleItemAdapter;
 public class ProblemSelectActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView problemRecyclerView;
+    private TextView toolbarTextView;
+    private AppCompatImageView toolbarImageView;
 
 
     @Override
@@ -31,11 +37,17 @@ public class ProblemSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_simple_select_view);
         ArrayList<Problem> problemList = AlgomoaSQLHelper.getInstance(this).getAllProblems(SiteList.valueOf(siteName));
         this.problemRecyclerView = (RecyclerView) findViewById(R.id.prob_list_recycler);
+        this.toolbarTextView = (TextView) findViewById(R.id.toolbar_text);
+        this.toolbarImageView = (AppCompatImageView) findViewById(R.id.toolbar_image);
+
+        this.toolbarImageView.setImageDrawable(SiteList.valueOf(siteName).fetchDrawable(getApplicationContext()));
         this.problemRecyclerView.setHasFixedSize(true);
         this.problemRecyclerView.setLayoutManager(new LinearLayoutManager(ProblemSelectActivity.this));
         this.problemRecyclerView.setAdapter(new SimpleItemAdapter(ProblemSelectActivity.this, problemList, R.layout.simple_itemview));
+
+        this.toolbarTextView.setText(siteName);
+
         this.initializeToolBar();
-        this.initializeRecyclerView();
     }
 
     @Override
@@ -47,7 +59,7 @@ public class ProblemSelectActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, SiteSelectActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
@@ -59,16 +71,11 @@ public class ProblemSelectActivity extends AppCompatActivity {
 
 
     private void initializeToolBar() {
-        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar_refer_view);
 
         if (this.toolbar != null) {
             this.setSupportActionBar(this.toolbar);
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    }
-
-    private void initializeRecyclerView() {
-        // TODO : This
-
     }
 }

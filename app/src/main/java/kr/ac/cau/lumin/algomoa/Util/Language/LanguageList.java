@@ -43,4 +43,19 @@ public enum LanguageList {
     public static ArrayList<LanguageList> fetchAllLanguageList() {
         return new ArrayList<>(Arrays.asList(LanguageList.class.getEnumConstants()));
     }
+
+    public Drawable fetchDrawable(Context context) {
+        switch (this) {
+            case Ruby:
+            {
+                return context.getResources().getDrawable(R.drawable.ruby_ic);
+            }
+            case Java:
+            {
+                return context.getResources().getDrawable(R.drawable.java_logo_ic);
+            }
+        }
+
+        return null;
+    }
 }

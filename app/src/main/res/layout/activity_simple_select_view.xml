@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include android:id="@+id/toolbar" layout="@layout/toolbar"/>
+    <include android:id="@+id/toolbar_refer_view" layout="@layout/toolbar_refer_view"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/prob_list_recycler"

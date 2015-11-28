@@ -27,10 +27,11 @@
                 android:paddingLeft="10dp"
                 android:text="문제 설명" />
 
+
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/prob_description"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="500dp"
                 android:background="#FFFFFF"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/description_notifier"
@@ -52,7 +53,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/prob_input"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
                 android:background="#FFFFFF"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/input_notifier"
