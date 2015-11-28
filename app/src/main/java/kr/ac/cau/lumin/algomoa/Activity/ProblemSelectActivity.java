@@ -3,24 +3,37 @@ package kr.ac.cau.lumin.algomoa.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import kr.ac.cau.lumin.algomoa.R;
+import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
+import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
+import kr.ac.cau.lumin.algomoa.Util.Adapter.SimpleItemAdapter;
 
 /**
  * Created by Lumin on 2015-11-26.
  */
 public class ProblemSelectActivity extends AppCompatActivity {
     private Toolbar toolbar;
+    private RecyclerView problemRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String siteName = getIntent().getExtras().getString("SiteName");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_view);
-
+        ArrayList<Problem> problemList = AlgomoaSQLHelper.getInstance(this).getAllProblems(SiteList.valueOf(siteName));
+        this.problemRecyclerView = (RecyclerView) findViewById(R.id.prob_list_recycler);
+        this.problemRecyclerView.setHasFixedSize(true);
+        this.problemRecyclerView.setLayoutManager(new LinearLayoutManager(ProblemSelectActivity.this));
+        this.problemRecyclerView.setAdapter(new SimpleItemAdapter(ProblemSelectActivity.this, problemList, R.layout.simple_itemview));
         this.initializeToolBar();
         this.initializeRecyclerView();
     }
@@ -56,5 +69,6 @@ public class ProblemSelectActivity extends AppCompatActivity {
 
     private void initializeRecyclerView() {
         // TODO : This
+
     }
 }

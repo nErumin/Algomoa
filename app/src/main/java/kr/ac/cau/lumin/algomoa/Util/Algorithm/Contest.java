@@ -38,9 +38,7 @@ public class Contest {
         timeBuilder.append(calendar.get(Calendar.MONTH) + "월 ");
         timeBuilder.append(calendar.get(Calendar.DATE) + "일 ");
         timeBuilder.append(calendar.get(Calendar.HOUR) + "시 ");
-        timeBuilder.append(calendar.get(Calendar.MINUTE) + "분 ");
-        timeBuilder.append(calendar.get(Calendar.SECOND) + "초에 시작합니다.");
-        timeBuilder.append(" (EST) ");
+        timeBuilder.append(calendar.get(Calendar.MINUTE) + "분에 시작합니다.");
 
         return timeBuilder.toString();
     }

@@ -14,10 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import kr.ac.cau.lumin.algomoa.Network.LanguageCrawlTask;
 import kr.ac.cau.lumin.algomoa.Network.ParsingTask;
@@ -31,13 +29,12 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.Codeforces;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Contest;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.Algorithm.SiteList;
-import kr.ac.cau.lumin.algomoa.Util.AlgorithmSettingAdapter;
-import kr.ac.cau.lumin.algomoa.Util.ContestSettingAdapter;
+import kr.ac.cau.lumin.algomoa.Util.Adapter.AlgorithmSettingAdapter;
+import kr.ac.cau.lumin.algomoa.Util.Adapter.ContestSettingAdapter;
 import kr.ac.cau.lumin.algomoa.Util.Language.Java;
-import kr.ac.cau.lumin.algomoa.Util.Language.Language;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 import kr.ac.cau.lumin.algomoa.Util.Language.Ruby;
-import kr.ac.cau.lumin.algomoa.Util.LanguageSettingAdapter;
+import kr.ac.cau.lumin.algomoa.Util.Adapter.LanguageSettingAdapter;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
 /**

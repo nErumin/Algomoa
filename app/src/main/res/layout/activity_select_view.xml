@@ -17,7 +17,7 @@
         android:text="@string/string_example" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/favn_lang_search_recycler"
+        android:id="@+id/site_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/textView2"

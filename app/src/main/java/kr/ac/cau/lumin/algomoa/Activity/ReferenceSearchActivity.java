@@ -18,7 +18,7 @@ import kr.ac.cau.lumin.algomoa.R;
 import kr.ac.cau.lumin.algomoa.SQLite.AlgomoaSQLHelper;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageList;
 import kr.ac.cau.lumin.algomoa.Util.Language.LanguageRefer;
-import kr.ac.cau.lumin.algomoa.Util.ReferenceAdapter;
+import kr.ac.cau.lumin.algomoa.Util.Adapter.ReferenceAdapter;
 import kr.ac.cau.lumin.algomoa.Util.User;
 
 /**
