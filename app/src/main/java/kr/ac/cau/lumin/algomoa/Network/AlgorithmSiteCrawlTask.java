@@ -26,15 +26,11 @@ import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 /**
  * Created by Lumin on 2015-11-25.
  */
-public class AlgorithmSiteCrawlTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
-    private Context parsingContext;
-    private ProgressDialog contextDialog;
-    private PostTaskListener taskListener;
+public class AlgorithmSiteCrawlTask extends NetworkCrawlTask {
     private AlgorithmSite crawlSite;
 
     public AlgorithmSiteCrawlTask(AlgorithmSite crawlSite, Context parsingContext, PostTaskListener taskListener) {
-        this.parsingContext = parsingContext;
-        this.taskListener = taskListener;
+        super(parsingContext, taskListener);
         this.crawlSite = crawlSite;
     }
 

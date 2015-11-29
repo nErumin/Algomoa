@@ -61,7 +61,7 @@ public class AlgomoaSQLHelper extends SQLiteOpenHelper {
         return sqlHelper;
     }
 
-    public AlgomoaSQLHelper(Context applicationContext) {
+    private AlgomoaSQLHelper(Context applicationContext) {
         super(applicationContext, DATABASE_NAME, null, DATABASE_VER);
     }
 

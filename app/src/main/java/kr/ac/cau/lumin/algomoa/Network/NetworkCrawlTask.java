@@ -9,7 +9,7 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 
 /**
- * Created by CAUCSE on 2015-11-26.
+ * Created by Lumin on 2015-11-26.
  */
 public abstract class NetworkCrawlTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
     protected Context parsingContext;

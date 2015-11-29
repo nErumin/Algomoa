@@ -29,16 +29,12 @@ import kr.ac.cau.lumin.algomoa.Util.Algorithm.Problem;
 /**
  * Created by Lumin on 2015-11-24.
  */
-public class ParsingTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
-    private Context parsingContext;
-    private ProgressDialog contextDialog;
-    private PostTaskListener taskListener;
+public class ParsingTask extends NetworkCrawlTask {
     private Parsable parsableObject;
     private APIList usingAPI;
 
     public ParsingTask(Context parsingContext, Parsable parsableObject, APIList usingAPI, PostTaskListener taskListener) {
-        this.parsingContext = parsingContext;
-        this.taskListener = taskListener;
+        super(parsingContext, taskListener);
         this.parsableObject = parsableObject;
         this.usingAPI = usingAPI;
     }

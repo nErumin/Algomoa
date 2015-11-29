@@ -25,15 +25,11 @@ import kr.ac.cau.lumin.algomoa.Util.PostTaskListener;
 /**
  * Created by Lumin on 2015-11-25.
  */
-public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements NetworkListener {
-    private Context parsingContext;
-    private ProgressDialog contextDialog;
-    private PostTaskListener taskListener;
+public class ProblemCrawlTask extends NetworkCrawlTask {
     private Problem crawlProblem;
 
     public ProblemCrawlTask(Problem crawlProblem, Context parsingContext, PostTaskListener taskListener) {
-        this.parsingContext = parsingContext;
-        this.taskListener = taskListener;
+        super(parsingContext, taskListener);
         this.crawlProblem = crawlProblem;
     }
 
@@ -51,14 +47,14 @@ public class ProblemCrawlTask extends AsyncTask<Void, Void, Void> implements Net
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-    }
-
-    @Override
     public void executeOnNetwork(String response) {
         this.taskListener.executeOnPostTask(crawlProblem.crawlContentFromHtml(response));
         this.contextDialog.dismiss();
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
     }
 
     @Override

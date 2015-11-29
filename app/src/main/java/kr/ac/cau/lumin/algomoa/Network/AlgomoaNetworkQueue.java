@@ -41,27 +41,7 @@ public class AlgomoaNetworkQueue  {
         requestQueue = this.getRequestQueue();
     }
 
-    private <T> void addObjectInRequestQueue(Request<T> request) {
-        this.getRequestQueue().add(request);
-    }
-
-    private RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(queueContext);
-        }
-        return requestQueue;
-    }
-
-    public String sendHttpPostRequest() {
-        String postResult = null;
-        // TODO : POST Operation.
-        // StringRequest request = new StringRequest(Request.Method.GET, , , );
-        return postResult;
-    }
-
     public void sendHttpGetRequest(Transmittable transmittable, final NetworkListener networkListener) {
-        // TODO : GET Operation
-
         Log.e("Test", "GET Request Reached");
         Log.e("Test", transmittable.getRequestURL());
         StringRequest request = new StringRequest(Request.Method.GET, transmittable.getRequestURL(), new Response.Listener<String>() {
@@ -78,5 +58,23 @@ public class AlgomoaNetworkQueue  {
 
         request.setRetryPolicy(new DefaultRetryPolicy(maxDuration, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(request);
+    }
+
+    private <T> void addObjectInRequestQueue(Request<T> request) {
+        this.getRequestQueue().add(request);
+    }
+
+    private RequestQueue getRequestQueue() {
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(queueContext);
+        }
+        return requestQueue;
+    }
+
+    public String sendHttpPostRequest() {
+        String postResult = null;
+        // TODO : POST Operation.
+        // StringRequest request = new StringRequest(Request.Method.GET, , , );
+        return postResult;
     }
 }
